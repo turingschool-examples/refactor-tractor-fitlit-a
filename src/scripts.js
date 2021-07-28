@@ -30,19 +30,6 @@ hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
 });
 
-//WE ARE HERE.****
-   // create an instance of the hydration repo and we want to pass the data file into the repo instance as an argument
-//new HydrationRepo
-
-  // hydrationUserOuncesToday.innerText = hydrationRepoInstance.getOuncesByDate(user.id, todayDate)
-
-
-
-// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-//   return hydration.userID === user.id && hydration.date === todayDate;
-// }).numOunces;
-
-
 sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
@@ -50,9 +37,6 @@ sleepData.forEach(sleep => {
 let user = userRepository.users[1];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
-
-
-
 
 
 let dailyOz = document.querySelectorAll('.daily-oz');
@@ -213,16 +197,16 @@ dropdownName.innerText = user.name.toUpperCase();
 
 headerName.innerText = `${user.getFirstName()}'S `;
 
-//  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*)
+//  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*) ------------------
 const hydrationRepo = new HydrationRepo(hydrationData);
 
 hydrationUserOuncesToday.innerText = hydrationRepo.getOuncesByDate(user.id, todayDate);
 
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;’
-
-//
+// Old Code
+// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+//   return hydration.userID === user.id && hydration.date === todayDate;
+// }).numOunces;’
+//--------------------------------------------------------------------------
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
