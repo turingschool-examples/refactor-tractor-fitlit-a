@@ -5,6 +5,7 @@ import userData from './data/users';
 import activityData from './data/activity';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
+import HydrationRepo from './hydrationRepo'
 
 import UserRepository from './UserRepository';
 import User from './User';
@@ -30,9 +31,16 @@ hydrationData.forEach(hydration => {
 });
 
 //WE ARE HERE.****
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;
+   // create an instance of the hydration repo and we want to pass the data file into the repo instance as an argument
+//new HydrationRepo
+
+  // hydrationUserOuncesToday.innerText = hydrationRepoInstance.getOuncesByDate(user.id, todayDate)
+
+
+
+// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+//   return hydration.userID === user.id && hydration.date === todayDate;
+// }).numOunces;
 
 
 sleepData.forEach(sleep => {
@@ -42,6 +50,8 @@ sleepData.forEach(sleep => {
 let user = userRepository.users[1];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
+
+
 
 
 
@@ -203,13 +213,20 @@ dropdownName.innerText = user.name.toUpperCase();
 
 headerName.innerText = `${user.getFirstName()}'S `;
 
-// //WE ARE HERE.
-// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-//   return hydration.userID === user.id && hydration.date === todayDate;
-// }).numOunces;
+//  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*)
+const hydrationRepo = new HydrationRepo(hydrationData);
+
+hydrationUserOuncesToday.innerText = hydrationRepo.getOuncesByDate(user.id, todayDate);
+
+hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+  return hydration.userID === user.id && hydration.date === todayDate;
+}).numOunces;’
+
+//
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
+//HYDRO REPO
 hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   return hydration.userID === user.id && hydration.date === todayDate;
 }).numOunces / 8;
@@ -218,26 +235,32 @@ sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(t
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
+//user repo.
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getLongestSleepers(todayDate)
 }).getFirstName();
 
+
+//user repo
 sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getWorstSleepers(todayDate)
 }).getFirstName();
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
+//user
 stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
   return (activity.date === todayDate && activity.userId === user.id)
 }).calculateMiles(userRepository);
 
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
+//SLEEP REPO
 sleepInfoQualityToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).sleepQuality;
 
+//SLEEP REPO
 sleepUserHoursToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).hoursSlept;
@@ -248,10 +271,13 @@ stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisW
 
 stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
+//ACTIVITY REPO
 stairsInfoFlightsToday.innerText = activityData.find(activity => {
   return activity.userID === user.id && activity.date === todayDate;
 }).flightsOfStairs;
 
+
+//ACTIVITY REPO
 stairsUserStairsToday.innerText = activityData.find(activity => {
   return activity.userID === user.id && activity.date === todayDate;
 }).flightsOfStairs * 12;
