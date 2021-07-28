@@ -9,7 +9,18 @@ class User {
     this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
     this.ouncesAverage = 0;
+    //
     this.ouncesRecord = [];
+// {2019/09/22: 68}
+// {2019/09/21: 48}
+//  {2019/09/20: 23}
+// {2019/09/19: 53}
+// {2019/09/18: 86}
+// {2019/09/17: 72}
+//  {2019/09/16: 82}
+// {2019/09/15: 25}
+// {2019/09/14: 88}
+
     this.hoursSleptAverage = 0;
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
@@ -32,6 +43,8 @@ class User {
     } else {
       this.ouncesAverage = amount;
     }
+    console.log("this.ouncesRecord", this.ouncesRecord)
+    console.log("this.ouncesAverage", this.ouncesAverage)
   }
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {

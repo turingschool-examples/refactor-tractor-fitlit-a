@@ -29,13 +29,21 @@ hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
 });
 
+//WE ARE HERE.****
+hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+  return hydration.userID === user.id && hydration.date === todayDate;
+}).numOunces;
+
+
 sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
 
-let user = userRepository.users[0];
+let user = userRepository.users[1];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
+
+
 
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
@@ -195,9 +203,10 @@ dropdownName.innerText = user.name.toUpperCase();
 
 headerName.innerText = `${user.getFirstName()}'S `;
 
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;
+// //WE ARE HERE.
+// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+//   return hydration.userID === user.id && hydration.date === todayDate;
+// }).numOunces;
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
