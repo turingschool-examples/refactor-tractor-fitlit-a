@@ -25,17 +25,16 @@ function preventDefault() {
 }
 
 function fetchData() {
-  const activityInfo = fetchCalls.callFitLitData('activity')
-  // .then(data => console.log(data))
-  // console.log(activityInfo)
+  const userInfo = fetchCalls.callFitLitData('users');
+  const activityInfo = fetchCalls.callFitLitData('activity');
 
-  Promise.all([activityInfo])
-  // .then(data => console.log(data[0].activityData))
-  .then(data => initializedData(data[0]))
+  Promise.all([userInfo, activityInfo])
+  .then(data => initializedData(data[0], data[1]))
   .catch(err => console.error(err))
 }
 
-function initializedData(activityData) {
+function initializedData(userData, activityData) {
+  console.log(userData.userData);
   console.log(activityData.activityData);
 }
 
