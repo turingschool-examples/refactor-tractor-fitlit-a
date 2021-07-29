@@ -16,63 +16,90 @@ import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
 
 
-/////// Fetch call for ACTIVITY CLASS //////////////
-// let userRepository = new UserRepository();
 // let user = userRepository.users[0];
 // console.log('global user:', user)
 // let todayDate = "2019/09/22";
 // user.findFriendsNames(userRepository.users);
 
+
+let userRepository = new UserRepository();
+
+
+
+////////////////// FETCH CALL ------------------------------------->
 // window.addEventListener("load", fetchData);
 
 function fetchData() {
   const userInfo = fetchCalls.callFitLitData('users');
   const activityInfo = fetchCalls.callFitLitData('activity');
+  const hydrationInfo = fetchCalls.callFitLitData('hydration');
+  const sleepInfo = fetchCalls.callFitLitData('sleep');
   // console.log(typeof userInfo)
 
-  Promise.all([userInfo, activityInfo])
-  .then(data => initializedData(data[0], data[1]))
+  Promise.all([userInfo, activityInfo, hydrationInfo, sleepInfo])
+  .then(data => initializedData(data[0], data[1], data[2], data[3]))
   .catch(err => console.error(err))
 }
 
-function initializedData(userData, activityData) {
-  console.log(typeof userData);
-  console.log(userData);
-  console.log(typeof userData.userData);
-  console.log(userData.userData);
-  const testUser = userData.userData.map(user => user.name);
-  console.log(testUser);
+function initializedData(userData, activityData, hydrationData, sleepData) {
+  // console.log(typeof userData);
+  // console.log(userData);
+  // console.log(typeof userData.userData);
+  // console.log(userData.userData);
+  // const testUser = userData.userData.map(user => user.name);
+  // console.log(testUser);
   // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
   userData.userData.forEach(user => {
     user = new User(user);
     userRepository.users.push(user)
   });
+  console.log('fetch userData:', userData.userData);
   // ------------------------->
 
 
-  console.log(typeof activityData);
-  console.log(activityData);
-  console.log(typeof activityData.activityData);
-  console.log(activityData.activityData);
-  const testActivity = activityData.activityData.map(activity => activity.date);
-  console.log(testActivity);
+  // -------------------------------------->
   // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
   activityData.activityData.forEach(activity => {
     activity = new Activity(activity, userRepository);
   });
+  console.log('fetch activityData:', activityData.activityData);
   //--------------------------------------->
 
+
+
+  // The same idea for this other two data sets ---------------->
+  hydrationData.hydrationData.forEach(hydration => {
+    hydration = new Hydration(hydration, userRepository);
+  });
+  console.log('fetch hydrationData:', hydrationData.hydrationData);
+
+
+  sleepData.sleepData.forEach(sleep => {
+    sleep = new Sleep(sleep, userRepository);
+  });
+  console.log('fetch sleepData:', sleepData.sleepData);
+  // ----------------------------------------------------------->
+
+
+  // Testing variable inside fetch calls ----------------------->
   let user = userRepository.users[0];
   console.log('fetch user:', user)
   console.log('fetch userRepository:', userRepository)
-  // activityInformation(user, userRepository);
+  // ----------------------------------------------------------->
 }
 
+fetchData();
+////////////////// FETCH CALLS -------------------------------->
 
 
-let userRepository = new UserRepository();
 
-////  PUT ALL OF THEM INSIDE OF THE FECTH CALLS ----------------->
+
+
+
+
+////  with the data files inside of the project ----------------->
+// let userRepository = new UserRepository();
+
 userData.forEach(user => {
   user = new User(user);
   userRepository.users.push(user)
@@ -89,16 +116,16 @@ hydrationData.forEach(hydration => {
 sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
-
-// let user = userRepository.users[0];
-// let todayDate = "2019/09/22";
-// user.findFriendsNames(userRepository.users);
 //-------------------------------------------->
+
+
+
 
 // let userRepository = new UserRepository();
 let user = userRepository.users[0];
 console.log('global user:', user)
 let todayDate = "2019/09/22";
+
 
 
 let dailyOz = document.querySelectorAll('.daily-oz');
@@ -255,9 +282,9 @@ function showInfo() {
 
 
 
-/////// Function for ACTIVITY FETCH CALLS --------------->
+///// This function will work when we implement the fetch calls for the - Iteration 5 || Activity class Info --------------------------------------->
+function activityInformation() {
 
-// function activityInformation(user, userRepository) {
   ///////// ACTIVITIES FOR TODAY ---------------->
   stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
 
@@ -316,11 +343,16 @@ function showInfo() {
   //   if (paragraph.innerText.includes('YOU')) {
   //     paragraph.classList.add('yellow-text');
   //   }
-  // }
+  }
+  //////----------------------------------------------------------------->
 
 
 
 
+
+
+/// Function to make it work with the FETCH CALLS
+// - Iteration 1 || User Info --------------------------------------->
 function userInformation() {
 
   dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
@@ -330,12 +362,8 @@ function userInformation() {
   dropdownName.innerText = user.name.toUpperCase();
 
   headerName.innerText = `${user.getFirstName()}'S `;
-
-
 }
-
-
-
+// ------------------------------------------------------------------>
 
 
 
@@ -492,9 +520,6 @@ stepsTrendingButton.addEventListener('click', function () {
 
 
 
-
-
-
 ///////////////////// ITERATION 5 ////////////////////////////
 // INFORMATION BASED ON LASTED DAY (activity, steps & minutes avtive)
 
@@ -594,6 +619,52 @@ friendsStepsParagraphs.forEach(paragraph => {
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
