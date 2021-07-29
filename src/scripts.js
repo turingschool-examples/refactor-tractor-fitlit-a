@@ -2,7 +2,6 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import userData from './data/users';
-import activityData from './data/activity';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepo from './hydrationRepo'
@@ -12,6 +11,32 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import activityData from './data/activity';
+import { fetchCalls } from './apiCalls';
+// console.log(fetchCalls)
+
+
+/////// Fetch call for ACTIVITY CLASS //////////////
+function preventDefault() {
+  event.preventDefault()
+}
+
+window.onload = () => {
+  const activityInfo = fetchCalls.callFitLitData('activity')
+  .then(data => console.log(data))
+
+  // Promise.all([activityInfo])
+  // .then(data => initializedData(activityInfo.activityData))
+  // .catch(err => console.error(err))
+}
+
+function initializedData(activityData) {
+  console.log(activityData);
+}
+
+
+
+
 
 
 
@@ -302,6 +327,8 @@ stepsTrendingButton.addEventListener('click', function () {
 });
 ///////////////////////////////////////////////////////////////
 
+
+// function activityInformation() {
 ///////////////////// ITERATION 5 ////////////////////////////
 // INFORMATION BASED ON LASTED DAY (activity, steps & minutes avtive)
 
@@ -398,7 +425,7 @@ friendsStepsParagraphs.forEach(paragraph => {
     paragraph.classList.add('yellow-text');
   }
 ///////////////////////////////////////////////////////
-
+// }
 });
 
 
