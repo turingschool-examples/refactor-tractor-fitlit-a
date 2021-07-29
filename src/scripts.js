@@ -3,12 +3,10 @@ import './css/styles.scss';
 
 import userData from './data/users';
 import activityData from './data/activity';
-console.log("activityDatea", activityData)
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepo from './hydrationRepo'
 import SleepRepo from './SleepRepo.js'
-
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';

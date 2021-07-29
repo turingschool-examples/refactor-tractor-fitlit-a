@@ -9,18 +9,7 @@ class User {
     this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
     this.ouncesAverage = 0;
-
     this.ouncesRecord = [];
-    // [{2019/09/22: 68}
-    // {2019/09/21: 48}
-    //  {2019/09/20: 23}
-    // {2019/09/19: 53}
-    // {2019/09/18: 86}
-    // {2019/09/17: 72}
-    //  {2019/09/16: 82}
-    // {2019/09/15: 25}
-    // {2019/09/14: 88}]
-
     this.hoursSleptAverage = 0;
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
@@ -35,7 +24,7 @@ class User {
   ///REFACTOR LN 201 SCRIPTS.JS
   //THIS METHOD RETURNS the ounces of water drank on one day for one user.
   getOuncesByDate(date) {
-    let valueNeeded = 0; 
+    let valueNeeded = 0;
     const ouncesByDate = this.ouncesRecord.forEach(item => {
       let key = Object.keys(item);
       let value = Object.values(item)
@@ -44,12 +33,9 @@ class User {
       }
     })
 
-    console.log(valueNeeded, "valueNeeded")
-    console.log(this.ouncesRecord, "ouncesRecord" )
-
+    // console.log(valueNeeded, "valueNeeded")
+    // console.log(this.ouncesRecord, "ouncesRecord" )
     return valueNeeded;
-
- 
   }
   // --------------------
 
@@ -115,7 +101,7 @@ class User {
 
   //REFACTOR SCRIPTS.JS LN 252 -----------------------------------
   getSleepQualityByDate(date) {
-    let valueNeeded = 0; 
+    let valueNeeded = 0;
     const sleepQualityByDate = this.sleepQualityRecord.forEach(item => {
       let key = Object.keys(item);
       let value = Object.values(item)
@@ -128,29 +114,27 @@ class User {
   }
  //-----------------------------------------------------------------------
 
+
+
+ ////////////////////////  - ACTIVITY MEHTODS - ////////////////////////
+ // update activity data to corresponding user instances ------>
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
   }
-
-  //THIS FUNCTION IS NEVER USED
-  findClimbingRecord() {
-    console.log("this.activityRecord", this.activityRecord)
-    return this.activityRecord.sort((a, b) => {
-      return b.flightsOfStairs - a.flightsOfStairs;
-    })[0].flightsOfStairs;
-   
+  // calculate total "steps" this WEEK ---------->
+  calculateTotalStepsThisWeek(todayDate) {
+    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
+      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
+      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
+        sum += activity.steps;
+      }
+      return sum;
+    }, 0));
   }
-  calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
-      return sumMinutes += activity.minutesActive
-    }, 0);
-    return Math.round(totalMinutes * 7.6);
-  }
+  // calculate average "minutes" this WEEK ---------->
   calculateAverageMinutesActiveThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -160,6 +144,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(0);
   }
+  // calculate average "steps" this WEEK ---------->
   calculateAverageStepsThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -169,6 +154,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(0);
   }
+  // calculate average "flights" this WEEK ---------->
   calculateAverageFlightsThisWeek(todayDate) {
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -178,6 +164,16 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+  // calculate daily calores ------->
+  calculateDailyCalories(date) {
+    let totalMinutes = this.activityRecord.filter(activity => {
+      return activity.date === date
+    }).reduce((sumMinutes, activity) => {
+      return sumMinutes += activity.minutesActive
+    }, 0);
+    return Math.round(totalMinutes * 7.6);
+  }
+  // Where are we using this method ? ------------->
   findTrendingStepDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
@@ -189,6 +185,7 @@ class User {
       }
     }
   }
+  // Where are we using this method ? ------------->
   findTrendingStairsDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
@@ -200,20 +197,13 @@ class User {
       }
     }
   }
+  // Extra Method: (extension) --------->
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
   }
-  calculateTotalStepsThisWeek(todayDate) {
-    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0));
-  }
+  // Extra Method: (extension) --------->
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
       let matchedFriend = users.find(user => user.id === friend);
@@ -232,6 +222,14 @@ class User {
       'totalWeeklySteps': this.totalStepsThisWeek
     });
     this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+  }
+  // Extra Method: (extension) --------->
+  //THIS FUNCTION IS NEVER USED
+  findClimbingRecord() {
+    console.log("this.activityRecord", this.activityRecord)
+    return this.activityRecord.sort((a, b) => {
+      return b.flightsOfStairs - a.flightsOfStairs;
+    })[0].flightsOfStairs;
   }
 }
 
