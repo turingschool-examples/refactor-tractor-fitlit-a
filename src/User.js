@@ -132,7 +132,7 @@ class User {
       activity.userId === user.id && activity.date === todayDate);
   }
 
-  // calculate total "steps" this WEEK ---------->
+  // calculate total "steps" this WEEK ----------> (I believe we are not using this method)
   calculateTotalStepsThisWeek(todayDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
