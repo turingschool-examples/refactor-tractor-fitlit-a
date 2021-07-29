@@ -11,15 +11,15 @@ class User {
     this.ouncesAverage = 0;
     //
     this.ouncesRecord = [];
-// {2019/09/22: 68}
-// {2019/09/21: 48}
-//  {2019/09/20: 23}
-// {2019/09/19: 53}
-// {2019/09/18: 86}
-// {2019/09/17: 72}
-//  {2019/09/16: 82}
-// {2019/09/15: 25}
-// {2019/09/14: 88}
+    // {2019/09/22: 68}
+    // {2019/09/21: 48}
+    //  {2019/09/20: 23}
+    // {2019/09/19: 53}
+    // {2019/09/18: 86}
+    // {2019/09/17: 72}
+    //  {2019/09/16: 82}
+    // {2019/09/15: 25}
+    // {2019/09/14: 88}
 
     this.hoursSleptAverage = 0;
     this.sleepQualityAverage = 0;
@@ -32,11 +32,10 @@ class User {
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
-  ///REFACTOR LN 201
+  ///REFACTOR LN 201 SCRIPTS.JS
+  //THIS METHOD RETURNS the ounces of water drank on one day for one user.
   getOuncesByDate(date) {
-  
     let valueNeeded = 0; 
-
     const ouncesByDate = this.ouncesRecord.forEach(item => {
       let key = Object.keys(item);
       let value = Object.values(item)
@@ -61,8 +60,6 @@ class User {
     } else {
       this.ouncesAverage = amount;
     }
-    // console.log("this.ouncesRecord", this.ouncesRecord)
-    // console.log("this.ouncesAverage", this.ouncesAverage)
   }
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
@@ -92,6 +89,7 @@ class User {
     } else {
       this.sleepQualityAverage = quality;
     }
+    console.log("sleepHoursRecord-->", (this.sleepHoursRecord))
   }
   calculateAverageHoursThisWeek(todayDate) {
     return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
@@ -111,6 +109,24 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
+  //REFACTOR SCRIPTS.JS LN 252 -----------------------------------
+  getSleepQualityByDate(date) {
+    let valueNeeded = 0; 
+    console.log(this.sleepQualityRecord)
+    const sleepQualityByDate = this.sleepQualityRecord.forEach(item => {
+      let key = Object.keys(item);
+      let value = Object.values(item)
+      console.log(Object.values(item))
+      if (key[0] === date) {
+        valueNeeded = value;
+      }
+    })
+    console.log("valueNeeded", valueNeeded);
+    return valueNeeded;
+  }
+ //-----------------------------------------------------------------------
+
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     if (activity.numSteps >= this.dailyStepGoal) {
