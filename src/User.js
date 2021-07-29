@@ -21,6 +21,13 @@ class User {
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
+
+  getFirstName() {
+    var names = this.name.split(' ');
+    return names[0].toUpperCase();
+  }
+
+  ////////////////////////  - HYDRATION METHODS - ////////////////////////
   ///REFACTOR LN 201 SCRIPTS.JS
   //THIS METHOD RETURNS the ounces of water drank on one day for one user.
   getOuncesByDate(date) {
@@ -37,12 +44,8 @@ class User {
     // console.log(this.ouncesRecord, "ouncesRecord" )
     return valueNeeded;
   }
-  // --------------------
 
-  getFirstName() {
-    var names = this.name.split(' ');
-    return names[0].toUpperCase();
-  }
+
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {
@@ -60,6 +63,8 @@ class User {
       return sum
     }, 0)
   }
+
+   ////////////////////////  - SLEEP METHODS - ////////////////////////
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
@@ -112,6 +117,8 @@ class User {
     })
     return valueNeeded;
   }
+
+  //REFACTOR SCRIPTS.JS LN 453 
  //-----------------------------------------------------------------------
 
 
