@@ -12,26 +12,31 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import activityData from './data/activity';
-import { fetchCalls } from './apiCalls';
+import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
 
 
 /////// Fetch call for ACTIVITY CLASS //////////////
+window.addEventListener("load", fetchData);
+
+
 function preventDefault() {
   event.preventDefault()
 }
 
-window.onload = () => {
+function fetchData() {
   const activityInfo = fetchCalls.callFitLitData('activity')
-  .then(data => console.log(data))
+  // .then(data => console.log(data))
+  // console.log(activityInfo)
 
-  // Promise.all([activityInfo])
-  // .then(data => initializedData(activityInfo.activityData))
-  // .catch(err => console.error(err))
+  Promise.all([activityInfo])
+  // .then(data => console.log(data[0].activityData))
+  .then(data => initializedData(data[0]))
+  .catch(err => console.error(err))
 }
 
 function initializedData(activityData) {
-  console.log(activityData);
+  console.log(activityData.activityData);
 }
 
 
