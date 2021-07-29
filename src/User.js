@@ -32,6 +32,24 @@ class User {
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
+  ///REFACTOR LN 201
+  getOuncesByDate(date) {
+  
+    let valueNeeded = 0; 
+
+    const ouncesByDate = this.ouncesRecord.forEach(item => {
+      let key = Object.keys(item);
+      let value = Object.values(item)
+      console.log(Object.values(item))
+      if (key[0] === date) {
+        valueNeeded = value;
+      }
+    })
+
+    return valueNeeded;
+  }
+  // --------------------
+
   getFirstName() {
     var names = this.name.split(' ');
     return names[0].toUpperCase();
@@ -43,8 +61,8 @@ class User {
     } else {
       this.ouncesAverage = amount;
     }
-    console.log("this.ouncesRecord", this.ouncesRecord)
-    console.log("this.ouncesAverage", this.ouncesAverage)
+    // console.log("this.ouncesRecord", this.ouncesRecord)
+    // console.log("this.ouncesAverage", this.ouncesAverage)
   }
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {

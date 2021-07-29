@@ -66,6 +66,7 @@ let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality
 let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
 let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+//This should be a method on the user class and a property on that class also.*
 let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
   if (Object.keys(a)[0] > Object.keys(b)[0]) {
     return -1;
@@ -200,12 +201,20 @@ headerName.innerText = `${user.getFirstName()}'S `;
 //  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*) ------------------
 const hydrationRepo = new HydrationRepo(hydrationData);
 
-hydrationUserOuncesToday.innerText = hydrationRepo.getOuncesByDate(user.id, todayDate);
+//Attempt 3 ... On user class.
+//Instead this could be a method on userClass user.getOuncesByDate()
+hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
+
+//ATTEMPT 2 ... on HydroRepo class.
+//hydrationUserOuncesToday.innerText = hydrationRepo.getOuncesByDate(user.id, //todayDate);
+
 
 // Old Code
 // hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
 //   return hydration.userID === user.id && hydration.date === todayDate;
 // }).numOunces;’
+
+
 //--------------------------------------------------------------------------
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
