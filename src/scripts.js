@@ -285,7 +285,6 @@ function showInfo() {
 
 
 
-
 ///// This function will work when we implement the fetch calls for the - Iteration 5 || Activity class Info --------------------------------------->
 function activityInformation(user, userRepository) {
 
@@ -376,11 +375,13 @@ function userInformation(user) {
 
 
 
-
+///HYDRATION ---*To DO ... Move.
 
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
+
+//USER CARD---*TO DO ...Move.
 
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
@@ -425,48 +426,33 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 
 
 ////////////// SLEPT FUNCTIONALITY ------------------------->
+// function sleepInformation(user, userRepository) {}
 
+
+//WEEKLY--------
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
-//user repo.
+//user repo /// averaging  -----------
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getLongestSleepers(todayDate)
 }).getFirstName();
 
-
-//user repo
 sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getWorstSleepers(todayDate)
 }).getFirstName();
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-// // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
-// stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-//   return (activity.date === todayDate && activity.userId === user.id)
-// }).calculateMiles(userRepository);
-
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
-//SLEEP REPO
-//REFACTOR ------------------------------------
+sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
 
-// OLD CODE -------
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).sleepQuality;
-
-////**** YOU ARE HERE */
-//REFACTOR OPTION 1: PUT IN SLEEP REPO
-// const sleepRepo = new SleepRepo(sleepData);
-// sleepInfoQualityToday.innerText = sleepRepo.getSleepQualityByDate(user.id, todayDate);
-
-// REFACTOR OPTION 2 // PUT IN USER
-     // all this data is held in user's this.sleepQualityRecord = [];
-    //Note: For this to work you have to change value from ["2019/06/15", 4.7] to ... ["2019/06/15": 4.7]
-// sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
+//OLD CODE
+// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === user.id && sleep.date === todayDate;
+// }).sleepQuality;
 // ---------------------------------------------
 
 

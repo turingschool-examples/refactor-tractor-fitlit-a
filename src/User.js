@@ -64,7 +64,7 @@ class User {
     }, 0)
   }
 
-   ////////////////////////  - SLEEP METHODS - ////////////////////////
+  ////////////////////////  - SLEEP METHODS - ////////////////////////
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
@@ -108,23 +108,19 @@ class User {
   getSleepQualityByDate(date) {
     let valueNeeded = 0;
     const sleepQualityByDate = this.sleepQualityRecord.forEach(item => {
-      let key = Object.keys(item);
-      let value = Object.values(item)
-      console.log(Object.values(item))
-      if (key[0] === date) {
-        valueNeeded = value;
+      console.log("item", item)
+      if (item.date === date)  {
+        valueNeeded = item.quality;
       }
     })
+    console.log("valueNeeded", valueNeeded)
     return valueNeeded;
   }
 
-  //REFACTOR SCRIPTS.JS LN 453 
- //-----------------------------------------------------------------------
 
 
-
- ////////////////////////  - ACTIVITY MEHTODS - ////////////////////////
- // update activity data to corresponding user instances ------>
+  ////////////////////////  - ACTIVITY MEHTODS - ////////////////////////
+  // update activity data to corresponding user instances ------>
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     // console.log("activity record in user class:", this.activityRecord)
