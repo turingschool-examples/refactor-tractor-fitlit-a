@@ -17,6 +17,9 @@ import fetchCalls from './apiCalls';
 
 
 /////// Fetch call for ACTIVITY CLASS //////////////
+let userRepository = new UserRepository();
+
+
 window.addEventListener("load", fetchData);
 
 
@@ -27,6 +30,7 @@ function preventDefault() {
 function fetchData() {
   const userInfo = fetchCalls.callFitLitData('users');
   const activityInfo = fetchCalls.callFitLitData('activity');
+  // console.log(typeof userInfo)
 
   Promise.all([userInfo, activityInfo])
   .then(data => initializedData(data[0], data[1]))
@@ -34,8 +38,32 @@ function fetchData() {
 }
 
 function initializedData(userData, activityData) {
+  console.log(typeof userData);
+  console.log(userData);
+  console.log(typeof userData.userData);
   console.log(userData.userData);
+  const testUser = userData.userData.map(user => user.name);
+  console.log(testUser);
+  // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
+  userData.userData.forEach(user => {
+    user = new User(user);
+    userRepository.users.push(user)
+  });
+  // ------------------------->
+
+
+  console.log(typeof activityData);
+  console.log(activityData);
+  console.log(typeof activityData.activityData);
   console.log(activityData.activityData);
+  const testActivity = activityData.activityData.map(activity => activity.date);
+  console.log(testActivity);
+  // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
+  activityData.activityData.forEach(activity => {
+    activity = new Activity(activity, userRepository);
+  });
+  //--------------------------------------->
+
 }
 
 
@@ -44,7 +72,7 @@ function initializedData(userData, activityData) {
 
 
 
-let userRepository = new UserRepository();
+// let userRepository = new UserRepository();
 
 userData.forEach(user => {
   user = new User(user);
