@@ -3,9 +3,11 @@ import './css/styles.scss';
 
 import userData from './data/users';
 import activityData from './data/activity';
+console.log("activityDatea", activityData)
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepo from './hydrationRepo'
+import SleepRepo from './SleepRepo.js'
 
 import UserRepository from './UserRepository';
 import User from './User';
@@ -214,7 +216,6 @@ hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
 //   return hydration.userID === user.id && hydration.date === todayDate;
 // }).numOunces;’
 
-
 //--------------------------------------------------------------------------
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
@@ -256,9 +257,13 @@ sleepInfoQualityToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).sleepQuality;
 
+////**** YOU ARE HERE */
 //REFACTOR OPTION 1: PUT IN SLEEP REPO
+// const sleepRepo = new SleepRepo(sleepData);
+// sleepInfoQualityToday.innerText = sleepRepo.getSleepQualityByDate(user.id, todayDate);
 
 // REFACTOR OPTION 2 // PUT IN USER
+     // all this data is held in user's this.sleepQualityRecord = [];
     //Note: For this to work you have to change value from ["2019/06/15", 4.7] to ... ["2019/06/15": 4.7]
 // sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
 // ---------------------------------------------
@@ -287,10 +292,18 @@ stairsInfoFlightsToday.innerText = activityData.find(activity => {
 }).flightsOfStairs;
 
 
-//ACTIVITY REPO
+//ACTIVITY REPO // this value is coming back 0: ERROR.
 stairsUserStairsToday.innerText = activityData.find(activity => {
   return activity.userID === user.id && activity.date === todayDate;
 }).flightsOfStairs * 12;
+
+const test = activityData.find(activity => {
+  return activity.userID === user.id && activity.date === todayDate;
+}).flightsOfStairs * 12;
+
+console.log(test)
+
+
 
 stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 

@@ -5,7 +5,6 @@ class HydrationRepo {
 
   getOuncesByDate(userId, date) {
     return this.allHydrationData.find(hydration => hydration.userID === userId && hydration.date === date).numOunces;
-  
   }
 }
 
