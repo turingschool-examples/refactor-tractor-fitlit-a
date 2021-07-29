@@ -249,14 +249,31 @@ stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
 //SLEEP REPO
+//REFACTOR ------------------------------------
+
+// OLD CODE -------
 sleepInfoQualityToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).sleepQuality;
 
-//SLEEP REPO
+//REFACTOR OPTION 1: PUT IN SLEEP REPO
+
+// REFACTOR OPTION 2 // PUT IN USER
+    //Note: For this to work you have to change value from ["2019/06/15", 4.7] to ... ["2019/06/15": 4.7]
+// sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
+// ---------------------------------------------
+
+
+
+//SLEEP REPO---------------------------------------
+// OPTION 1: PUT THIS LOGIC ON USER CLASS
+    // USER class holds: this.sleepHoursRecord = []; with objects of {date: "2019/09/22", hours: 4.2}
 sleepUserHoursToday.innerText = sleepData.find(sleep => {
   return sleep.userID === user.id && sleep.date === todayDate;
 }).hoursSlept;
+
+//OPTION 2: Put on sleep repo and create new method.
+//--------------------------------------------------
 
 stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
