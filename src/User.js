@@ -172,7 +172,7 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
-  // calculate daily calores ------->
+  // calculate daily calores -------> EXTRA INFO <----------------
   calculateDailyCalories(date) {
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date

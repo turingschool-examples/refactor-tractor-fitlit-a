@@ -1,6 +1,7 @@
 import './css/base.scss';
 import './css/styles.scss';
 
+import userData from './data/users';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepo from './hydrationRepo'
@@ -10,8 +11,8 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-import userData from './data/users';
-import activityData from './data/activity';
+
+// import activityData from './data/activity';
 import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
 
@@ -47,8 +48,6 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
   // console.log(userData);
   // console.log(typeof userData.userData);
   // console.log(userData.userData);
-  // const testUser = userData.userData.map(user => user.name);
-  // console.log(testUser);
   // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
   userData.userData.forEach(user => {
     user = new User(user);
@@ -90,7 +89,7 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
   // ----------------------------------------------------------->
 
   activityInformation(user, userRepository);
-  userInformation(user);
+  // userInformation(user);
 }
 
 fetchData();
@@ -125,11 +124,10 @@ sleepData.forEach(sleep => {
 
 
 
-
-// let userRepository = new UserRepository();
+/// Assign value to the user class;
 let user = userRepository.users[0];
 console.log('global user:', user)
-// let todayDate = "2019/09/22";
+
 
 
 
@@ -348,7 +346,6 @@ function activityInformation(user, userRepository) {
       paragraph.classList.add('yellow-text');
     }
   });
-  
 
 }
   //////----------------------------------------------------------------->
@@ -539,7 +536,6 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).minutesActive;
 // NEW CODE VERSION:
-
 // stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
 
 // For a user, the number of steps for the latest day - Iteartion 5 -
@@ -548,7 +544,6 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).numSteps;
 // NEW CODE VERSION:
-
 // stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).steps;
 
 // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
@@ -557,7 +552,6 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return (activity.date === todayDate && activity.userId === user.id)
 // }).calculateMiles(userRepository);
 // NEW VERSION CODE:
-
 // stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate).calculateMiles(userRepository);
 
 //  For a user, the amount of their flighted staris  for the last day- Iteration 5 -
@@ -566,7 +560,6 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).flightsOfStairs;
 // NEW CODE VERSION:
-
 // stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs;
 
 //  For a user, the amount of their climbed staris  for the last day- Iteration 5 -
@@ -575,14 +568,12 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).flightsOfStairs * 12;
 // NEW CODE VERSION:
-
 // stairsUserStairsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs * 12;
 
 
 
 // For a user, a weekly view of their step count, flights of stairs climbed, and minutes active
 // weekly view of their minutes active - Iteration 5 -
-
 // stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
 
 // weekly view of their step count - Iteration 5 -
