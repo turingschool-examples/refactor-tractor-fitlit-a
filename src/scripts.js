@@ -178,15 +178,15 @@ function showInfo() {
   }
 }
 
-function updateTrendingStairsDays() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-}
-
-function updateTrendingStepDays() {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-}
+// function updateTrendingStairsDays() {
+//   user.findTrendingStairsDays();
+//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+// }
+//
+// function updateTrendingStepDays() {
+//   user.findTrendingStepDays();
+//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+// }
 
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
@@ -242,10 +242,10 @@ sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-//user
-stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-  return (activity.date === todayDate && activity.userId === user.id)
-}).calculateMiles(userRepository);
+// // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
+// stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+//   return (activity.date === todayDate && activity.userId === user.id)
+// }).calculateMiles(userRepository);
 
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
@@ -280,63 +280,101 @@ sleepUserHoursToday.innerText = sleepData.find(sleep => {
 //OPTION 2: Put on sleep repo and create new method.
 //--------------------------------------------------
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+// stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
-stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-//ACTIVITY REPO
-stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs;
+// //ACTIVITY REPO
+// stairsInfoFlightsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).flightsOfStairs;
 
 
-//ACTIVITY REPO // this value is coming back 0: ERROR.
-stairsUserStairsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
+// //ACTIVITY REPO // this value is coming back 0: ERROR.
+// stairsUserStairsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).flightsOfStairs * 12;
 
-const test = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
-
-console.log(test)
-
+// const test = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).flightsOfStairs * 12;
+// console.log(test)
 
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+//////////// THIS CODE IS REPEATED ///////////////////////
+//  weekly view of their flight staris - Iteration 5 -
+// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+//
+
+//  weekly view of their climbed staris - Iteration 5 -
+// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+
+// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+/////////////////////////////////////////////////////////
+
+
+// // weekly view of their minutes active - Iteration 5 -
+// stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+//
+// // weekly view of their step count - Iteration 5 -
+// stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+
+// For a user, the number minutes active for the latest day - Iteration 5 -
+// stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).minutesActive;
+
+// For a user, the number of steps for the latest day - Iteartion 5 -
+// stepsUserStepsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).numSteps;
+
+// // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
+// stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+//   return (activity.date === todayDate && activity.userId === user.id)
+// }).calculateMiles(userRepository);
+
+// // weekly view of their minutes active - Iteration 5 -
+// stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+
+// // weekly view of their step count - Iteration 5 -
+// stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+
+//////////////////////// -  ACTIVITY -  EVENT LISTENERS ////////////////////
+
+function updateTrendingStairsDays() {
+  user.findTrendingStairsDays();
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+}
+
+function updateTrendingStepDays() {
+  user.findTrendingStepDays();
+  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+}
 
 stairsTrendingButton.addEventListener('click', function () {
   user.findTrendingStairsDays();
   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
 });
 
-stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
-
-stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
-
 stepsTrendingButton.addEventListener('click', function () {
   user.findTrendingStepDays();
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
 });
+///////////////////////////////////////////////////////////////
+
+
+
+
+///////////////// ACTIVITY INFO ABOUT FRIENDS /////////////////////////
+stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
 stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
 stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
 
 stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-
-stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).minutesActive;
-
-// For a user, the number of steps for the latest day - Iteartion 5 - 
-stepsUserStepsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).numSteps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
@@ -358,4 +396,62 @@ friendsStepsParagraphs.forEach(paragraph => {
   if (paragraph.innerText.includes('YOU')) {
     paragraph.classList.add('yellow-text');
   }
+/////////////////////////////////////////////////////////////////////
+
+
+
+
+///////////////////// ITERATION 5 ////////////////////////////
+// INFORMATION BASED ON LASTED DAY (activity, steps & minutes avtive)
+
+// For a user, the number minutes active for the latest day - Iteration 5 -
+stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+  return activity.userID === user.id && activity.date === todayDate;
+}).minutesActive;
+
+// For a user, the number of steps for the latest day - Iteartion 5 -
+stepsUserStepsToday.innerText = activityData.find(activity => {
+  return activity.userID === user.id && activity.date === todayDate;
+}).numSteps;
+
+// For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
+stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+  return (activity.date === todayDate && activity.userId === user.id)
+}).calculateMiles(userRepository);
+
+//  For a user, the amount of their flighted staris  for the last day- Iteration 5 -
+stairsInfoFlightsToday.innerText = activityData.find(activity => {
+  return activity.userID === user.id && activity.date === todayDate;
+}).flightsOfStairs;
+
+//  For a user, the amount of their climbed staris  for the last day- Iteration 5 -
+stairsUserStairsToday.innerText = activityData.find(activity => {
+  return activity.userID === user.id && activity.date === todayDate;
+}).flightsOfStairs * 12;
+
+
+
+
+
+
+// For a user, a weekly view of their step count, flights of stairs climbed, and minutes active
+// weekly view of their minutes active - Iteration 5 -
+stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+
+// weekly view of their step count - Iteration 5 -
+stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+
+//  weekly view of their flight staris - Iteration 5 -
+stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+
+// //  weekly view of their climbed staris - Iteration 5 -
+stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+///////////////////////////////////////////////////////
+
+
+
+
+
+
+
 });
