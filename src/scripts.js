@@ -36,7 +36,7 @@ sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
 
-let user = userRepository.users[1];
+let user = userRepository.users[0];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
 
@@ -333,6 +333,7 @@ stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
   return activity.userID === user.id && activity.date === todayDate;
 }).minutesActive;
 
+// For a user, the number of steps for the latest day - Iteartion 5 - 
 stepsUserStepsToday.innerText = activityData.find(activity => {
   return activity.userID === user.id && activity.date === todayDate;
 }).numSteps;
