@@ -107,15 +107,28 @@ class User {
   //REFACTOR SCRIPTS.JS LN 252 -----------------------------------
   getSleepQualityByDate(date) {
     let valueNeeded = 0;
-    const sleepQualityByDate = this.sleepQualityRecord.forEach(item => {
-      console.log("item", item)
+    this.sleepQualityRecord.forEach(item => {
       if (item.date === date)  {
         valueNeeded = item.quality;
       }
     })
-    console.log("valueNeeded", valueNeeded)
     return valueNeeded;
   }
+
+  //**YOU ARE HERE */
+  getHoursSleptByDate(date) {
+    let valueNeeded = 0;
+    console.log("hours", this.sleepHoursRecord)
+    this.sleepHoursRecord.forEach(item => {
+      if (item.date === date)  {
+        valueNeeded = item.hours;
+      }
+    })
+    return valueNeeded;
+  }
+
+
+
 
 
 

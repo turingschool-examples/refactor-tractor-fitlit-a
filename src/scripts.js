@@ -455,16 +455,12 @@ sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
 // }).sleepQuality;
 // ---------------------------------------------
 
+sleepUserHoursToday.innerText = user.getHoursSleptByDate(todayDate);
 
+// sleepUserHoursToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === user.id && sleep.date === todayDate;
+// }).hoursSlept;
 
-//SLEEP REPO---------------------------------------
-// OPTION 1: PUT THIS LOGIC ON USER CLASS
-    // USER class holds: this.sleepHoursRecord = []; with objects of {date: "2019/09/22", hours: 4.2}
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).hoursSlept;
-
-//OPTION 2: Put on sleep repo and create new method.
 //-------------------------------------------------->
 
 
