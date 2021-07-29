@@ -120,10 +120,18 @@ class User {
  // update activity data to corresponding user instances ------>
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
+    // console.log("activity record in user class:", this.activityRecord)
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
   }
+
+  //This method is recyclable and help us for all the activity info for today
+  findActivityInfoToday(user, todayDate) {
+    return this.activityRecord.find(activity =>
+      activity.userId === user.id && activity.date === todayDate);
+  }
+
   // calculate total "steps" this WEEK ---------->
   calculateTotalStepsThisWeek(todayDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {

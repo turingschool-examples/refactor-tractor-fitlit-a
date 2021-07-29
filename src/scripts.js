@@ -403,29 +403,44 @@ friendsStepsParagraphs.forEach(paragraph => {
 // INFORMATION BASED ON LASTED DAY (activity, steps & minutes avtive)
 
 // For a user, the number minutes active for the latest day - Iteration 5 -
-stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).minutesActive;
+// OLD CODE VERSION:
+// stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).minutesActive;
+// NEW CODE VERSION:
+stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
 
 // For a user, the number of steps for the latest day - Iteartion 5 -
-stepsUserStepsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).numSteps;
+// Old code version:
+// stepsUserStepsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).numSteps;
+// NEW CODE VERSION:
+stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).steps;
 
 // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
-stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-  return (activity.date === todayDate && activity.userId === user.id)
-}).calculateMiles(userRepository);
+// Old code version:
+// stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+//   return (activity.date === todayDate && activity.userId === user.id)
+// }).calculateMiles(userRepository);
+// NEW VERSION CODE:
+stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate).calculateMiles(userRepository);
 
 //  For a user, the amount of their flighted staris  for the last day- Iteration 5 -
-stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs;
+// Old code version:
+// stairsInfoFlightsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).flightsOfStairs;
+// NEW CODE VERSION:
+stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs;
 
 //  For a user, the amount of their climbed staris  for the last day- Iteration 5 -
-stairsUserStairsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
+// Old code version:
+// stairsUserStairsToday.innerText = activityData.find(activity => {
+//   return activity.userID === user.id && activity.date === todayDate;
+// }).flightsOfStairs * 12;
+// NEW CODE VERSION:
+stairsUserStairsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs * 12;
 
 
 
