@@ -90,6 +90,7 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
 
   activityInformation(user, userRepository);
   // userInformation(user);
+  sleepInformation(user, userRepository)
 }
 
 fetchData();
@@ -426,7 +427,7 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 
 
 ////////////// SLEPT FUNCTIONALITY ------------------------->
-// function sleepInformation(user, userRepository) {}
+function sleepInformation(user, userRepository) {
 
 
 //WEEKLY--------
@@ -463,7 +464,7 @@ sleepUserHoursToday.innerText = user.getHoursSleptByDate(todayDate);
 
 //-------------------------------------------------->
 
-
+}
 
 
 
