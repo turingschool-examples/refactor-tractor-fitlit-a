@@ -23,6 +23,7 @@ import fetchCalls from './apiCalls';
 
 
 let userRepository = new UserRepository();
+let todayDate = "2019/09/22";
 
 
 
@@ -83,9 +84,13 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
 
   // Testing variable inside fetch calls ----------------------->
   let user = userRepository.users[0];
+  // let todayDate = "2019/09/22";
   console.log('fetch user:', user)
-  console.log('fetch userRepository:', userRepository)
+  console.log('fetch userRepository:', userRepository, todayDate)
   // ----------------------------------------------------------->
+
+  activityInformation(user, userRepository);
+  userInformation(user);
 }
 
 fetchData();
@@ -105,9 +110,9 @@ userData.forEach(user => {
   userRepository.users.push(user)
 });
 
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
-});
+// activityData.forEach(activity => {
+//   activity = new Activity(activity, userRepository);
+// });
 
 hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
@@ -124,7 +129,7 @@ sleepData.forEach(sleep => {
 // let userRepository = new UserRepository();
 let user = userRepository.users[0];
 console.log('global user:', user)
-let todayDate = "2019/09/22";
+// let todayDate = "2019/09/22";
 
 
 
@@ -193,6 +198,7 @@ let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
 let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
+let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
@@ -283,7 +289,7 @@ function showInfo() {
 
 
 ///// This function will work when we implement the fetch calls for the - Iteration 5 || Activity class Info --------------------------------------->
-function activityInformation() {
+function activityInformation(user, userRepository) {
 
   ///////// ACTIVITIES FOR TODAY ---------------->
   stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
@@ -330,20 +336,21 @@ function activityInformation() {
     `;
   });
 
-  // let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
-// }
-  // friendsStepsParagraphs.forEach(paragraph => {
-  //   if (friendsStepsParagraphs[0] === paragraph) {
-  //     paragraph.classList.add('green-text');
-  //   }
-  //   if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-  //     paragraph.classList.add('red-text');
-  //   }
-  //   if (paragraph.innerText.includes('YOU')) {
-  //     paragraph.classList.add('yellow-text');
-  //   }
-  }
+  friendsStepsParagraphs.forEach(paragraph => {
+    if (friendsStepsParagraphs[0] === paragraph) {
+      paragraph.classList.add('green-text');
+    }
+    if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+      paragraph.classList.add('red-text');
+    }
+    if (paragraph.innerText.includes('YOU')) {
+      paragraph.classList.add('yellow-text');
+    }
+  });
+  
+
+}
   //////----------------------------------------------------------------->
 
 
@@ -353,7 +360,7 @@ function activityInformation() {
 
 /// Function to make it work with the FETCH CALLS
 // - Iteration 1 || User Info --------------------------------------->
-function userInformation() {
+function userInformation(user) {
 
   dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
@@ -520,6 +527,9 @@ stepsTrendingButton.addEventListener('click', function () {
 
 
 
+
+
+
 ///////////////////// ITERATION 5 ////////////////////////////
 // INFORMATION BASED ON LASTED DAY (activity, steps & minutes avtive)
 
@@ -529,7 +539,8 @@ stepsTrendingButton.addEventListener('click', function () {
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).minutesActive;
 // NEW CODE VERSION:
-stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
+
+// stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
 
 // For a user, the number of steps for the latest day - Iteartion 5 -
 // Old code version:
@@ -537,7 +548,8 @@ stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDa
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).numSteps;
 // NEW CODE VERSION:
-stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).steps;
+
+// stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).steps;
 
 // For a user, the distance they have walked (in miles) for the latest day based on their step count - Iteration 5 -
 // Old code version:
@@ -545,7 +557,8 @@ stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).step
 //   return (activity.date === todayDate && activity.userId === user.id)
 // }).calculateMiles(userRepository);
 // NEW VERSION CODE:
-stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate).calculateMiles(userRepository);
+
+// stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate).calculateMiles(userRepository);
 
 //  For a user, the amount of their flighted staris  for the last day- Iteration 5 -
 // Old code version:
@@ -553,7 +566,8 @@ stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).flightsOfStairs;
 // NEW CODE VERSION:
-stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs;
+
+// stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs;
 
 //  For a user, the amount of their climbed staris  for the last day- Iteration 5 -
 // Old code version:
@@ -561,64 +575,64 @@ stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).f
 //   return activity.userID === user.id && activity.date === todayDate;
 // }).flightsOfStairs * 12;
 // NEW CODE VERSION:
-stairsUserStairsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs * 12;
+
+// stairsUserStairsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs * 12;
 
 
 
 // For a user, a weekly view of their step count, flights of stairs climbed, and minutes active
 // weekly view of their minutes active - Iteration 5 -
-stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+
+// stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
 
 // weekly view of their step count - Iteration 5 -
-stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+// stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
 
 //  weekly view of their flight staris - Iteration 5 -
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
 // //  weekly view of their climbed staris - Iteration 5 -
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
 
 
 
 
 // How their number of steps, minutes active, and flights of stairs climbed compares to friend's users for the latest day
 // Today's Steps Minutes from Friends:
-stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+// stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 
 // Today's Minutes Active from Friends:
-stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+// stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
 // Today's Average Stairs Fligthed  from Friends:
-stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+// stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
 // Steps Goal from all friends:
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+// stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
 
 // Where are we using this function ????
-user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+// user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
-user.friendsActivityRecords.forEach(friend => {
-  dropdownFriendsStepsContainer.innerHTML += `
-  <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  `;
-});
+// user.friendsActivityRecords.forEach(friend => {
+//   dropdownFriendsStepsContainer.innerHTML += `
+//   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
+//   `;
+// });
 
-let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+// let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
-friendsStepsParagraphs.forEach(paragraph => {
-  if (friendsStepsParagraphs[0] === paragraph) {
-    paragraph.classList.add('green-text');
-  }
-  if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-    paragraph.classList.add('red-text');
-  }
-  if (paragraph.innerText.includes('YOU')) {
-    paragraph.classList.add('yellow-text');
-  }
-///////////////////////////////////////////////////////
+// friendsStepsParagraphs.forEach(paragraph => {
+//   if (friendsStepsParagraphs[0] === paragraph) {
+//     paragraph.classList.add('green-text');
+//   }
+//   if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+//     paragraph.classList.add('red-text');
+//   }
+//   if (paragraph.innerText.includes('YOU')) {
+//     paragraph.classList.add('yellow-text');
+//   }
+// });
 
-
-});
 
 
 
