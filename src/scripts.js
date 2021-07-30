@@ -78,13 +78,10 @@ mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 
 
-
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
   cardToShow.classList.remove('hide');
 }
-
-
 
 
 
@@ -93,6 +90,8 @@ function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
 
+
+//#Fix ... event deprecated?
 function showInfo() {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
@@ -152,14 +151,6 @@ function showInfo() {
 //////////////// ------------------------------->
 
 
-
-
-
-// let user = userRepository.users[0];
-// console.log('global user:', user)
-// let todayDate = "2019/09/22";
-// user.findFriendsNames(userRepository.users);
-
 //this holds all our users...* this is an important global variable right now.
 let userRepository = new UserRepository();
 
@@ -182,34 +173,20 @@ function fetchData() {
   const activityInfo = fetchCalls.callFitLitData('activity');
   const hydrationInfo = fetchCalls.callFitLitData('hydration');
   const sleepInfo = fetchCalls.callFitLitData('sleep');
-  // console.log(typeof userInfo)
 
   Promise.all([userInfo, activityInfo, hydrationInfo, sleepInfo])
-  .then(data => {
-    initializedData(data[0], data[1], data[2], data[3])
-  })
+  .then(data => initializedData(data[0], data[1], data[2], data[3]))
   .catch(err => console.error(err))
 }
 
 function initializedData(userData, activityData, hydrationData, sleepData) {
-  // console.log(typeof userData);
-  // console.log(userData);
-  // console.log(typeof userData.userData);
-  // console.log(userData.userData);
-  // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
-  
   Promise.resolve(intializeUserData(userData)).then(storeUserData(activityData, hydrationData, sleepData)).then(updatePageInfo());
-
-  // console.log('fetch userData:', userData.userData);
-  // ------------------------->
-
-
 }
 
 function intializeUserData(userData) {
   userData.userData.forEach(user => {
     let userInstance = new User(user);
-  userRepository.users.push(userInstance)
+    userRepository.users.push(userInstance)
   })
 }
 
@@ -222,91 +199,31 @@ function storeUserData (activityData, hydrationData, sleepData) {
     // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
     
     activityData.activityData.forEach(activity => {
-      activity = new Activity(activity, userRepository);
+     new Activity(activity, userRepository);
     });
-    console.log('fetch activityData:', activityData.activityData);
     //--------------------------------------->
-
-
 
     // The same idea for this other two data sets ---------------->
     hydrationData.hydrationData.forEach(hydration => {
-      hydration = new Hydration(hydration, userRepository);
+      new Hydration(hydration, userRepository);
     });
-
-    console.log('fetch hydrationData:', hydrationData.hydrationData);
-
 
     sleepData.sleepData.forEach(sleep => {
-      sleep = new Sleep(sleep, userRepository);
+      new Sleep(sleep, userRepository);
     });
-    console.log('fetch sleepData:', sleepData.sleepData);
     // ----------------------------------------------------------->
   }
 
 
   function updatePageInfo() {
-
-  // Testing variable inside fetch calls ----------------------->
-  let user = userRepository.users[0];
-  // let todayDate = "2019/09/22";
-  // console.log('fetch user:', user)
-  // console.log('fetch userRepository:', userRepository, todayDate)
-  // ----------------------------------------------------------->
-
-  activityInformation(user, userRepository);
-  sleepInformation(user, userRepository)
-  userInformation(user)
+    let user = userRepository.users[0];
+    
+    activityInformation(user, userRepository);
+    sleepInformation(user, userRepository);
+    userInformation(user);
+    //NEED to FIX hydration function here// this is why it currently does not show up on the page.. there is no function that calls it.
+    hydrationInformation(user, userRepository);
   }
-
-
-
-
-
-////  with the data files inside of the project ----------------->
-// let userRepository = new UserRepository();
-
-///YOU ARE WORKING HERE****
-// userData.forEach(user => {
-//   user = new User(user);
-//   userRepository.users.push(user)
-// });
-
-// activityData.forEach(activity => {
-//   activity = new Activity(activity, userRepository);
-// });
-
-hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
-});
-//
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
-//-------------------------------------------->
-
-
-
-/// Assign value to the user class;
-let user = userRepository.users[0];
-console.log('global user:', user)
-
-
-
-//DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.keys(a)[0] > Object.keys(b)[0]) {
-    return -1;
-  }
-  if (Object.keys(a)[0] < Object.keys(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
-
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
-
 
 
 
@@ -401,14 +318,19 @@ function userInformation(user) {
 
 
 
-
+///PUT ALL OF THIS IN A FUNCTION TO CALL IN DISPLAY INFO AFTER API CALL MADE.
 ///TO DO: ... Move INTO USER CLASSS AND WRAP HYDRATION INFORMATION FUNCTION AROUND IT TO MATCH OTHERS. ----------------------------------------------------
 
+function hydrationInformation(user, userRepository) {
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
 
 hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
+// Old Code
+// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+//   return hydration.userID === user.id && hydration.date === todayDate;
+// }).numOunces;
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
@@ -417,19 +339,26 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   return hydration.userID === user.id && hydration.date === todayDate;
 }).numOunces / 8;
 
-// Old Code
-// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-//   return hydration.userID === user.id && hydration.date === todayDate;
-// }).numOunces;’
-
 //--------------------------------------------------------------------------
+///ERROR: scripts.js:179 ReferenceError: Cannot access 'sortedHydrationDataByDate' before initialization
+  let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+    if (Object.keys(a)[0] > Object.keys(b)[0]) {
+      return -1;
+    }
+    if (Object.keys(a)[0] < Object.keys(b)[0]) {
+      return 1;
+    }
+    return 0;
+  });
+
+}
 
 
+//DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
+///THESE FOR NOW NEED TO STAY HERE  -------------------
 
-
-
-
-
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 
 
@@ -437,12 +366,10 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 ////////////// SLEPT FUNCTIONALITY ------------------------->
 function sleepInformation(user, userRepository) {
 
-//WEEKLY---------------------------
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
-//averaging  -----------
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getLongestSleepers(todayDate)
 }).getFirstName();
