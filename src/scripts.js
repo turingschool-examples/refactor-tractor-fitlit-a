@@ -16,142 +16,7 @@ import Sleep from './Sleep';
 import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
 
-
-// let user = userRepository.users[0];
-// console.log('global user:', user)
-// let todayDate = "2019/09/22";
-// user.findFriendsNames(userRepository.users);
-
-//this holds all our users...* this is an important global variable right now.
-let userRepository = new UserRepository();
-
-//REFACTOR:NEW CHANGE: this date is not accurate
-let todayDate = "2019/09/22";
-  // date should be last date in list.
-  // get rid of this global variable and add an argument to each method in user class that requires date
-   // // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
-//see calculateAverageHoursThisWeek(todayDate) as an example. 
-
-
-
-////////////////// FETCH CALL ------------------------------------->
-// window.addEventListener("load", fetchData);
-
-function fetchData() {
-  const userInfo = fetchCalls.callFitLitData('users');
-  const activityInfo = fetchCalls.callFitLitData('activity');
-  const hydrationInfo = fetchCalls.callFitLitData('hydration');
-  const sleepInfo = fetchCalls.callFitLitData('sleep');
-  // console.log(typeof userInfo)
-
-  Promise.all([userInfo, activityInfo, hydrationInfo, sleepInfo])
-  .then(data => initializedData(data[0], data[1], data[2], data[3]))
-  .catch(err => console.error(err))
-}
-
-function initializedData(userData, activityData, hydrationData, sleepData) {
-  // console.log(typeof userData);
-  // console.log(userData);
-  // console.log(typeof userData.userData);
-  // console.log(userData.userData);
-  // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
-  
-  Promise.resolve(userData.userData.forEach(user => {
-      let userInstance = new User(user);
-    userRepository.users.push(userInstance)
-  })).then(storeUserData(activityData, hydrationData, sleepData)).then(updatePageInfo())
-
-  // console.log('fetch userData:', userData.userData);
-  // ------------------------->
-
-
-
-
-
-}
-
-fetchData();
-////////////////// FETCH CALLS -------------------------------->
-
-//This will then take the data from the api call data and AFTER the use repo is created with all of the user instances it can then store the user data on the user.
-function storeUserData (activityData, hydrationData, sleepData) {
-    // -------------------------------------->
-    // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
-    
-    activityData.activityData.forEach(activity => {
-      activity = new Activity(activity, userRepository);
-    });
-    console.log('fetch activityData:', activityData.activityData);
-    //--------------------------------------->
-
-
-
-    // The same idea for this other two data sets ---------------->
-    hydrationData.hydrationData.forEach(hydration => {
-      hydration = new Hydration(hydration, userRepository);
-    });
-
-    console.log('fetch hydrationData:', hydrationData.hydrationData);
-
-
-    sleepData.sleepData.forEach(sleep => {
-      sleep = new Sleep(sleep, userRepository);
-    });
-    console.log('fetch sleepData:', sleepData.sleepData);
-    // ----------------------------------------------------------->
-  }
-
-  function updatePageInfo() {
-
-  // Testing variable inside fetch calls ----------------------->
-  let user = userRepository.users[0];
-  // let todayDate = "2019/09/22";
-  // console.log('fetch user:', user)
-  // console.log('fetch userRepository:', userRepository, todayDate)
-  // ----------------------------------------------------------->
-
-  activityInformation(user, userRepository);
-  sleepInformation(user, userRepository)
-  userInformation(user)
-  }
-
-
-
-
-
-////  with the data files inside of the project ----------------->
-// let userRepository = new UserRepository();
-
-///YOU ARE WORKING HERE****
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
-
-// activityData.forEach(activity => {
-//   activity = new Activity(activity, userRepository);
-// });
-
-hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
-});
-//
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
-//-------------------------------------------->
-
-
-
-/// Assign value to the user class;
-let user = userRepository.users[0];
-console.log('global user:', user)
-
-
-
-
+///---GLOBAL VARIABLES FOR DOM ELEMENTS ---------------------------
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
 let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
@@ -179,16 +44,6 @@ let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality
 let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
 let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-// This should be a method on the user class and a property on that class also.*
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.keys(a)[0] > Object.keys(b)[0]) {
-    return -1;
-  }
-  if (Object.keys(a)[0] < Object.keys(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
 let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
 let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
 let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
@@ -221,8 +76,8 @@ let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+
+
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -300,6 +155,157 @@ function showInfo() {
 
 
 
+// let user = userRepository.users[0];
+// console.log('global user:', user)
+// let todayDate = "2019/09/22";
+// user.findFriendsNames(userRepository.users);
+
+//this holds all our users...* this is an important global variable right now.
+let userRepository = new UserRepository();
+
+//REFACTOR:NEW CHANGE: this date is not accurate
+let todayDate = "2019/09/22";
+  // date should be last date in list.
+  // get rid of this global variable and add an argument to each method in user class that requires date
+   // // if(!date){
+    //   this.sleepQualityAverage[0].date;
+    // }
+//see calculateAverageHoursThisWeek(todayDate) as an example. 
+
+
+
+////////////////// FETCH CALL ------------------------------------->
+// window.addEventListener("load", fetchData);
+
+function fetchData() {
+  const userInfo = fetchCalls.callFitLitData('users');
+  const activityInfo = fetchCalls.callFitLitData('activity');
+  const hydrationInfo = fetchCalls.callFitLitData('hydration');
+  const sleepInfo = fetchCalls.callFitLitData('sleep');
+  // console.log(typeof userInfo)
+
+  Promise.all([userInfo, activityInfo, hydrationInfo, sleepInfo])
+  .then(data => {
+    initializedData(data[0], data[1], data[2], data[3])
+  })
+  .catch(err => console.error(err))
+}
+
+function initializedData(userData, activityData, hydrationData, sleepData) {
+  // console.log(typeof userData);
+  // console.log(userData);
+  // console.log(typeof userData.userData);
+  // console.log(userData.userData);
+  // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
+  
+  Promise.resolve(intializeUserData(userData)).then(storeUserData(activityData, hydrationData, sleepData)).then(updatePageInfo());
+
+  // console.log('fetch userData:', userData.userData);
+  // ------------------------->
+
+
+}
+
+function intializeUserData(userData) {
+  userData.userData.forEach(user => {
+    let userInstance = new User(user);
+  userRepository.users.push(userInstance)
+  })
+}
+
+fetchData();
+////////////////// FETCH CALLS -------------------------------->
+
+//This will then take the data from the api call data and AFTER the use repo is created with all of the user instances it can then store the user data on the user.
+function storeUserData (activityData, hydrationData, sleepData) {
+    // -------------------------------------->
+    // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
+    
+    activityData.activityData.forEach(activity => {
+      activity = new Activity(activity, userRepository);
+    });
+    console.log('fetch activityData:', activityData.activityData);
+    //--------------------------------------->
+
+
+
+    // The same idea for this other two data sets ---------------->
+    hydrationData.hydrationData.forEach(hydration => {
+      hydration = new Hydration(hydration, userRepository);
+    });
+
+    console.log('fetch hydrationData:', hydrationData.hydrationData);
+
+
+    sleepData.sleepData.forEach(sleep => {
+      sleep = new Sleep(sleep, userRepository);
+    });
+    console.log('fetch sleepData:', sleepData.sleepData);
+    // ----------------------------------------------------------->
+  }
+
+
+  function updatePageInfo() {
+
+  // Testing variable inside fetch calls ----------------------->
+  let user = userRepository.users[0];
+  // let todayDate = "2019/09/22";
+  // console.log('fetch user:', user)
+  // console.log('fetch userRepository:', userRepository, todayDate)
+  // ----------------------------------------------------------->
+
+  activityInformation(user, userRepository);
+  sleepInformation(user, userRepository)
+  userInformation(user)
+  }
+
+
+
+
+
+////  with the data files inside of the project ----------------->
+// let userRepository = new UserRepository();
+
+///YOU ARE WORKING HERE****
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
+
+// activityData.forEach(activity => {
+//   activity = new Activity(activity, userRepository);
+// });
+
+hydrationData.forEach(hydration => {
+  hydration = new Hydration(hydration, userRepository);
+});
+//
+sleepData.forEach(sleep => {
+  sleep = new Sleep(sleep, userRepository);
+});
+//-------------------------------------------->
+
+
+
+/// Assign value to the user class;
+let user = userRepository.users[0];
+console.log('global user:', user)
+
+
+
+//DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
+let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+  if (Object.keys(a)[0] > Object.keys(b)[0]) {
+    return -1;
+  }
+  if (Object.keys(a)[0] < Object.keys(b)[0]) {
+    return 1;
+  }
+  return 0;
+});
+
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 
 
