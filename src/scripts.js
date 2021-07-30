@@ -24,7 +24,16 @@ import fetchCalls from './apiCalls';
 
 
 let userRepository = new UserRepository();
+
+//REFACTOR:NEW CHANGE: this date is not accurate
 let todayDate = "2019/09/22";
+  // date should be last date in list.
+  // get rid of this global variable and add an argument to each method in user class that requires date
+   // // if(!date){
+    //   this.sleepQualityAverage[0].date;
+    // }
+//see calculateAverageHoursThisWeek(todayDate) as an example. 
+
 
 
 
