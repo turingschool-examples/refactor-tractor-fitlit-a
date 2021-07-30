@@ -98,8 +98,8 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
   // ----------------------------------------------------------->
 
   activityInformation(user, userRepository);
-  // userInformation(user);
   sleepInformation(user, userRepository)
+  userInformation(user)
 }
 
 fetchData();
@@ -390,16 +390,6 @@ function userInformation(user) {
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
-
-//USER CARD---*TO DO ...Move.
-
-dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
-
-dropdownEmail.innerText = `EMAIL | ${user.email}`;
-
-dropdownName.innerText = user.name.toUpperCase();
-
-headerName.innerText = `${user.getFirstName()}'S `;
 
 //  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*) ------------------
 // const hydrationRepo = new HydrationRepo(hydrationData);
