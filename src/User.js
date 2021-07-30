@@ -10,10 +10,12 @@ class User {
     this.friends = userData.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
+
     this.hoursSleptAverage = 0;
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
     this.sleepQualityRecord = [];
+
     this.activityRecord = [];
     this.accomplishedDays = [];
     this.trendingStepDays = [];
@@ -32,19 +34,15 @@ class User {
   //THIS METHOD RETURNS the ounces of water drank on one day for one user.
   getOuncesByDate(date) {
     let valueNeeded = 0;
-    const ouncesByDate = this.ouncesRecord.forEach(item => {
+    this.ouncesRecord.forEach(item => {
       let key = Object.keys(item);
       let value = Object.values(item)
       if (key[0] === date) {
         valueNeeded = value;
       }
     })
-
-    // console.log(valueNeeded, "valueNeeded")
-    // console.log(this.ouncesRecord, "ouncesRecord" )
     return valueNeeded;
   }
-
 
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
@@ -54,6 +52,7 @@ class User {
       this.ouncesAverage = amount;
     }
   }
+
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
@@ -74,16 +73,18 @@ class User {
       'date': date,
       'quality': quality
     });
-    if(this.sleepHoursRecord.length) {
+    // if (this.sleepHoursRecord.length) {
       this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-    } else {
-      this.hoursSleptAverage = hours;
-    }
-    if (this.sleepQualityRecord.length) {
+    //  } 
+    //else {
+    //   this.hoursSleptAverage = hours;
+    // }
+    // if (this.sleepQualityRecord.length) {
       this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-    } else {
-      this.sleepQualityAverage = quality;
-    }
+    // } 
+    // else {
+    //   this.sleepQualityAverage = quality;
+    // }
   }
   calculateAverageHoursThisWeek(todayDate) {
     return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
