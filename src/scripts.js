@@ -22,7 +22,7 @@ import fetchCalls from './apiCalls';
 // let todayDate = "2019/09/22";
 // user.findFriendsNames(userRepository.users);
 
-
+//this holds all our users...* this is an important global variable right now.
 let userRepository = new UserRepository();
 
 //REFACTOR:NEW CHANGE: this date is not accurate
@@ -33,7 +33,6 @@ let todayDate = "2019/09/22";
     //   this.sleepQualityAverage[0].date;
     // }
 //see calculateAverageHoursThisWeek(todayDate) as an example. 
-
 
 
 
@@ -58,54 +57,65 @@ function initializedData(userData, activityData, hydrationData, sleepData) {
   // console.log(typeof userData.userData);
   // console.log(userData.userData);
   // Function to instantiate every element from the userData class(50 instances) and push all of the in the propery .user from the userRepository instances that we have as a global variable ! -------->
-  userData.userData.forEach(user => {
-    user = new User(user);
-    userRepository.users.push(user)
-  });
-  console.log('fetch userData:', userData.userData);
+  
+  Promise.resolve(userData.userData.forEach(user => {
+      let userInstance = new User(user);
+    userRepository.users.push(userInstance)
+  })).then(storeUserData(activityData, hydrationData, sleepData)).then(updatePageInfo())
+
+  // console.log('fetch userData:', userData.userData);
   // ------------------------->
 
 
-  // -------------------------------------->
-  // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
-  activityData.activityData.forEach(activity => {
-    activity = new Activity(activity, userRepository);
-  });
-  console.log('fetch activityData:', activityData.activityData);
-  //--------------------------------------->
 
 
 
-  // The same idea for this other two data sets ---------------->
-  hydrationData.hydrationData.forEach(hydration => {
-    hydration = new Hydration(hydration, userRepository);
-  });
-  console.log('fetch hydrationData:', hydrationData.hydrationData);
-
-
-  sleepData.sleepData.forEach(sleep => {
-    sleep = new Sleep(sleep, userRepository);
-  });
-  console.log('fetch sleepData:', sleepData.sleepData);
-  // ----------------------------------------------------------->
-
-
-  // Testing variable inside fetch calls ----------------------->
-  let user = userRepository.users[0];
-  // let todayDate = "2019/09/22";
-  console.log('fetch user:', user)
-  console.log('fetch userRepository:', userRepository, todayDate)
-  // ----------------------------------------------------------->
-
-  activityInformation(user, userRepository);
-  sleepInformation(user, userRepository)
-  userInformation(user)
 }
 
 fetchData();
 ////////////////// FETCH CALLS -------------------------------->
 
+//This will then take the data from the api call data and AFTER the use repo is created with all of the user instances it can then store the user data on the user.
+function storeUserData (activityData, hydrationData, sleepData) {
+    // -------------------------------------->
+    // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
+    
+    activityData.activityData.forEach(activity => {
+      activity = new Activity(activity, userRepository);
+    });
+    console.log('fetch activityData:', activityData.activityData);
+    //--------------------------------------->
 
+
+
+    // The same idea for this other two data sets ---------------->
+    hydrationData.hydrationData.forEach(hydration => {
+      hydration = new Hydration(hydration, userRepository);
+    });
+
+    console.log('fetch hydrationData:', hydrationData.hydrationData);
+
+
+    sleepData.sleepData.forEach(sleep => {
+      sleep = new Sleep(sleep, userRepository);
+    });
+    console.log('fetch sleepData:', sleepData.sleepData);
+    // ----------------------------------------------------------->
+  }
+
+  function updatePageInfo() {
+
+  // Testing variable inside fetch calls ----------------------->
+  let user = userRepository.users[0];
+  // let todayDate = "2019/09/22";
+  // console.log('fetch user:', user)
+  // console.log('fetch userRepository:', userRepository, todayDate)
+  // ----------------------------------------------------------->
+
+  activityInformation(user, userRepository);
+  sleepInformation(user, userRepository)
+  userInformation(user)
+  }
 
 
 
@@ -114,6 +124,7 @@ fetchData();
 ////  with the data files inside of the project ----------------->
 // let userRepository = new UserRepository();
 
+///YOU ARE WORKING HERE****
 userData.forEach(user => {
   user = new User(user);
   userRepository.users.push(user)
@@ -385,21 +396,13 @@ function userInformation(user) {
 
 
 
-///HYDRATION ---*To DO ... Move.
+///TO DO: ... Move INTO USER CLASSS AND WRAP HYDRATION INFORMATION FUNCTION AROUND IT TO MATCH OTHERS. ----------------------------------------------------
 
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
 
-//  Refactored Code (EXAMPLE OF HOW TO MOVE CODE TO A REPO*) ------------------
-// const hydrationRepo = new HydrationRepo(hydrationData);
-
-//Attempt 3 ... On user class.
-//Instead this could be a method on userClass user.getOuncesByDate()
 hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
-
-//ATTEMPT 2 ... on HydroRepo class.
-//hydrationUserOuncesToday.innerText = hydrationRepo.getOuncesByDate(user.id, //todayDate);
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
@@ -428,13 +431,12 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 ////////////// SLEPT FUNCTIONALITY ------------------------->
 function sleepInformation(user, userRepository) {
 
-
-//WEEKLY--------
+//WEEKLY---------------------------
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
-//user repo /// averaging  -----------
+//averaging  -----------
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
   return user.id === userRepository.getLongestSleepers(todayDate)
 }).getFirstName();
@@ -449,19 +451,7 @@ sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
 sleepInfoQualityToday.innerText = user.getSleepQualityByDate(todayDate);
 
-//OLD CODE
-// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === user.id && sleep.date === todayDate;
-// }).sleepQuality;
-// ---------------------------------------------
-
 sleepUserHoursToday.innerText = user.getHoursSleptByDate(todayDate);
-
-// sleepUserHoursToday.innerText = sleepData.find(sleep => {
-//   return sleep.userID === user.id && sleep.date === todayDate;
-// }).hoursSlept;
-
-//-------------------------------------------------->
 
 }
 
