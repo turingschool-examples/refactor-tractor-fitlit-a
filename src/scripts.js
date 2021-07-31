@@ -1,8 +1,8 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import userData from './data/users';
-import sleepData from './data/sleep';
+// import userData from './data/users';
+// import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 import HydrationRepo from './hydrationRepo'
 import SleepRepo from './SleepRepo.js'

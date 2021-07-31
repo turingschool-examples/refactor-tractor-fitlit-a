@@ -23,6 +23,15 @@
     <main>
       <section class='card-container' id='steps-card-container'>
         <section class='main-card' id='steps-main-card'>
+          <form>
+            <label for="num-steps">
+            <input type="number" class="add-num-steps" name="num-steps" value="numSteps" placeholder="Number of Steps" required>
+            <label for="min-actv">
+            <input type="number" class="add-min-actv" name="min-actv" value="minutesActive" placeholder="Minutes Active" required>
+            <label for="flight-staris">
+            <input type="number" class="add-flight-staris" name="flight-staris" value="flightsOfStairs" placeholder="Flights of Stairs" required>
+             <button type="submit" value="submit-atcv-data" id="submitAtcvData">Submit Activity</button>
+          </form>
           <div class='main-card-top-row'>
             <button type='button' name='button' class='info-button steps-info-button'></button>
             <h3>YOU HAVE WALKED</h3>
@@ -229,7 +238,7 @@
           </div>
         </section>
       </section>
-    </main>  
+    </main>
     <script src="bundle.js"></script>
   </body>
 </html>
