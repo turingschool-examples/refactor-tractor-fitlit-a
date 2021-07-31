@@ -16,6 +16,7 @@ import Sleep from './Sleep';
 import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
 
+
 ///---GLOBAL VARIABLES FOR DOM ELEMENTS ---------------------------
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
@@ -91,7 +92,8 @@ function showDropdown() {
 }
 
 
-//#Fix ... event deprecated?
+// switch statement
+// needs a different target.
 function showInfo() {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
@@ -156,6 +158,7 @@ let userRepository = new UserRepository();
 
 //REFACTOR:NEW CHANGE: this date is not accurate
 let todayDate = "2019/09/22";
+let user;
   // date should be last date in list.
   // get rid of this global variable and add an argument to each method in user class that requires date
    // // if(!date){
@@ -176,13 +179,19 @@ function fetchData() {
 
   Promise.all([userInfo, activityInfo, hydrationInfo, sleepInfo])
   .then(data => initializedData(data[0], data[1], data[2], data[3]))
+  // .then(initial user data only)
+  // .then(intialize sleep, hydro, and activity data)
+  // .then(populate page)
   .catch(err => console.error(err))
+
 }
 
 function initializedData(userData, activityData, hydrationData, sleepData) {
+  // starts a promise chain so that you can use .then.
   Promise.resolve(intializeUserData(userData)).then(storeUserData(activityData, hydrationData, sleepData)).then(updatePageInfo());
 }
 
+//STEP 1:
 function intializeUserData(userData) {
   userData.userData.forEach(user => {
     let userInstance = new User(user);
@@ -194,6 +203,8 @@ fetchData();
 ////////////////// FETCH CALLS -------------------------------->
 
 //This will then take the data from the api call data and AFTER the use repo is created with all of the user instances it can then store the user data on the user.
+
+//STEP 2
 function storeUserData (activityData, hydrationData, sleepData) {
     // -------------------------------------->
     // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
@@ -216,7 +227,7 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
 
   function updatePageInfo() {
-    let user = userRepository.users[0];
+    user = userRepository.users[0];
     
     activityInformation(user, userRepository);
     sleepInformation(user, userRepository);
@@ -314,9 +325,31 @@ function userInformation(user) {
 
 
 
+///POST DATA FUNCTIONS ---------------------------------------
+//event listener
 
+document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
+  addSleep(e);
+})
 
+function addSleep() {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const sleepItem = {
+    userID: user.id;
+    date: Date.now();
+    hoursSlept: formData.get('hoursSlept');
+    sleepQuality: formData.get('sleepQuality');
+  }
+  addSleepItem(sleepItem);
+  e.target.reset();
+}
 
+function addSleep(sleepItem) {
+
+}
+
+// fetchCalls.callFitLitData('sleep');
 
 ///PUT ALL OF THIS IN A FUNCTION TO CALL IN DISPLAY INFO AFTER API CALL MADE.
 ///TO DO: ... Move INTO USER CLASSS AND WRAP HYDRATION INFORMATION FUNCTION AROUND IT TO MATCH OTHERS. ----------------------------------------------------
@@ -334,7 +367,7 @@ hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
-//HYDRO REPO
+//user class
 hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   return hydration.userID === user.id && hydration.date === todayDate;
 }).numOunces / 8;
@@ -397,7 +430,11 @@ sleepUserHoursToday.innerText = user.getHoursSleptByDate(todayDate);
 
 
 
+//DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
+///THESE FOR NOW NEED TO STAY HERE  -------------------
 
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 
 //////////////////////// -  ACTIVITY -  EVENT LISTENERS ////////////////////
