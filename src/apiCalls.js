@@ -16,7 +16,7 @@ const fetchCalls = {
       body: JSON.stringify(body),
     })
       .then(response => response.json())
-      .then(confirmation => console.log(confirmation));
+      .then(confirmation => console.log("this is the new object that have been POSTED:", confirmation));
   }
 
 };

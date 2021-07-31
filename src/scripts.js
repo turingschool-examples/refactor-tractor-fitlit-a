@@ -11,6 +11,7 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import dayjs from 'dayjs';
 
 
 
@@ -20,7 +21,7 @@ import fetchCalls from './apiCalls';
 let defaultDate = new Date();
 // console.log(defaultDate)
 let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-console.log("date here--->", dateDayJs)
+console.log("date here--->", currentDate)
 
 
 // let user ;
@@ -89,8 +90,8 @@ let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 // queries for DOM post request !
 let addNumSteps = document.querySelector('.add-num-steps');
 let addMinActv = document.querySelector('.add-min-actv');
-let addFlightStaris = document.querySelectorAll('.add-flight-staris');
-let submitAtcvDataBtn = document.querySelectorAll('#submitAtcvData');
+let addFlightStairs = document.querySelector('.add-flight-stairs');
+let submitAtcvDataBtn = document.getElementById('submitAtcvData');
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
@@ -258,25 +259,26 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
   function postActivityData() {
 
-    // console.log(currentUser.id);
-  // console.log(dateJs);
-  // console.log(typeof parseInt(event.target.querySelector('.room-num').innerHTML.split(' ')[2]));
+
   preventDefault();
-  let makeBookingBtn = document.getElementById('makeBookingBtn');
-  makeBookingBtn.innerText = "Successful Book"
-  const test1 = event.target.querySelector('.room-num');
-  const test2 = test1.innerHTML.split(' ')[2]
-  const test3 = parseInt(test2);
-  // console.log(test3);
+  const numStepsInput = parseInt(addNumSteps.value);
+  console.log(numStepsInput)
+
+  const minActiveInput = parseInt(addMinActv.value);
+  console.log(minActiveInput)
+
+  const flightStairsInput = parseInt(addFlightStairs.value);
+  console.log(flightStairsInput);
 
   let user = userRepository.users[0];
+
 
   let postObject = {
      userID: user.id,
      date: currentDate,
-     numSteps: addNumSteps.value,
-     minutesActive: addMinActv.value,
-     flightsOfStairs: addFlightStaris.value
+     numSteps: numStepsInput,
+     minutesActive: minActiveInput,
+     flightsOfStairs: flightStairsInput
     };
   console.log('postObject', postObject)
 
@@ -424,8 +426,8 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 //DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
 ///THESE FOR NOW NEED TO STAY HERE  -------------------
 
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 
 
 

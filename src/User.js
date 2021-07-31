@@ -120,7 +120,7 @@ class User {
     //   this.sleepQualityAverage[0].date;
     // }
     let valueNeeded = 0;
-    console.log("hours", this.sleepHoursRecord)
+    // console.log("hours", this.sleepHoursRecord)
     this.sleepHoursRecord.forEach(item => {
       if (item.date === date)  {
         valueNeeded = item.hours;
