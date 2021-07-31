@@ -77,8 +77,8 @@ class User {
   }
 
   calculateAverageHoursThisWeek(todayDate) {
-    // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    // if(!todayDate){
+    //   this.sleepQualityRecord[0].date;
     // }
   return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
     let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));

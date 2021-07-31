@@ -351,10 +351,19 @@ function addSleep(sleepItem) {
     headers: {'Content-type': application/json},
     body: JSON.stringify(sleepItem)
   }).then(reponse => checkForError(reponse))
-  .then()
+  .then( {
+    //create new function
+    updatePageInfo();
+    // add to UserClass.. with fetch is this a consistently updating dom with the server running(AJAX). Will it be automatically updated without a reload if we add to the sleep class?
+
+    //check how this data will be recieved from the class/set up correctly in current object?
+    new Sleep(sleepItem)
+  })
   .catch(err => displayErrorMessage(err)) 
 }
 //we need to update our data model so we should also instantiate a new instance of our sleep class**
+
+//OTHER NOTES: need to disable submit button and add required to each field.
 
 function checkForError() {
   if(!response.ok) {
