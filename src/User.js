@@ -76,9 +76,9 @@ class User {
   }
 
   calculateAverageHoursThisWeek(todayDate) {
-    // if(!todayDate){
-    //   this.sleepQualityRecord[0].date;
-    // }
+     if(!todayDate){
+      todayDate = this.sleepQualityRecord[0].date;
+    }
   return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
     let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
     if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
@@ -89,9 +89,9 @@ class User {
   }
 
   calculateAverageQualityThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+     if(!todayDate){
+      todayDate = this.sleepQualityRecord[0].date;
+    }
     return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
       let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
       if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
@@ -102,9 +102,9 @@ class User {
   }
 
   getSleepQualityByDate(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+      if(!date){
+      date = this.sleepQualityRecord[0].date;
+    }
     let valueNeeded = 0;
     this.sleepQualityRecord.forEach(item => {
       if (item.date === date)  {
@@ -115,11 +115,10 @@ class User {
   }
 
   getHoursSleptByDate(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+      if(!date){
+      date = this.sleepQualityRecord[0].date;
+    }
     let valueNeeded = 0;
-    console.log("hours", this.sleepHoursRecord)
     this.sleepHoursRecord.forEach(item => {
       if (item.date === date)  {
         valueNeeded = item.hours;
@@ -275,7 +274,6 @@ class User {
   // Extra Method: (extension) --------->
   //THIS FUNCTION IS NEVER USED
   findClimbingRecord() {
-    console.log("this.activityRecord", this.activityRecord)
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
     })[0].flightsOfStairs;
