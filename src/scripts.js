@@ -86,9 +86,15 @@ let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phr
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
+// queries for DOM post request !
+let addNumSteps = document.querySelector('.add-num-steps');
+let addMinActv = document.querySelector('.add-min-actv');
+let addFlightStaris = document.querySelectorAll('.add-flight-staris');
+let submitAtcvDataBtn = document.querySelectorAll('#submitAtcvData');
+
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-
+submitAtcvDataBtn.addEventListener('click', postActivityData);
 
 
 function preventDefault() {
@@ -248,7 +254,10 @@ function storeUserData (activityData, hydrationData, sleepData) {
   /////////// CREATE A NEW ACTIVITY POST REQUEST ------------------>
 
 
+
+
   function postActivityData() {
+
     // console.log(currentUser.id);
   // console.log(dateJs);
   // console.log(typeof parseInt(event.target.querySelector('.room-num').innerHTML.split(' ')[2]));
@@ -265,9 +274,9 @@ function storeUserData (activityData, hydrationData, sleepData) {
   let postObject = {
      userID: user.id,
      date: currentDate,
-     numSteps: ,
-     minutesActive: ,
-     flightsOfStairs:
+     numSteps: addNumSteps.value,
+     minutesActive: addMinActv.value,
+     flightsOfStairs: addFlightStaris.value
     };
   console.log('postObject', postObject)
 
