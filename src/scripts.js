@@ -352,8 +352,9 @@ function addSleep(sleepItem) {
     body: JSON.stringify(sleepItem)
   }).then(reponse => checkForError(reponse))
   .then()
-  .catch() 
+  .catch(err => displayErrorMessage(err)) 
 }
+//we need to update our data model so we should also instantiate a new instance of our sleep class**
 
 function checkForError() {
   if(!response.ok) {
