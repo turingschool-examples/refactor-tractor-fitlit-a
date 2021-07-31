@@ -18,10 +18,10 @@ import dayjs from 'dayjs';
 // import activityData from './data/activity';
 import fetchCalls from './apiCalls';
 
-let defaultDate = new Date();
-// console.log(defaultDate)
-let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-console.log("date here--->", currentDate)
+// let defaultDate = new Date();
+// // console.log(defaultDate)
+// let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+// console.log("date here--->", currentDate)
 
 
 // let user ;
@@ -179,8 +179,14 @@ function showInfo() {
 //this holds all our users...* this is an important global variable right now.
 let userRepository = new UserRepository();
 
-//REFACTOR:NEW CHANGE: this date is not accurate
+//REFACTOR:NEW CHANGE: this date is not
+// Lastest DATE from the -- activity data ---
+// let todayDate = "2020/01/22";
+
+// lastest DATE from the -- sleep data ---
 let todayDate = "2019/09/22";
+
+
   // date should be last date in list.
   // get rid of this global variable and add an argument to each method in user class that requires date
    // // if(!date){
@@ -218,6 +224,8 @@ function intializeUserData(userData) {
 fetchData();
 ////////////////// FETCH CALLS -------------------------------->
 
+
+
 //This will then take the data from the api call data and AFTER the use repo is created with all of the user instances it can then store the user data on the user.
 function storeUserData (activityData, hydrationData, sleepData) {
     // -------------------------------------->
@@ -241,13 +249,15 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
 
   function updatePageInfo() {
-    let user = userRepository.users[0];
+    let user = userRepository.users[1];
 
     activityInformation(user, userRepository);
     sleepInformation(user, userRepository);
     userInformation(user);
     //NEED to FIX hydration function here// this is why it currently does not show up on the page.. there is no function that calls it.
-    hydrationInformation(user, userRepository);
+    // FIX THIS ONE -------------------------->
+    // hydrationInformation(user, userRepository);
+    // ---------------------------------------->
   }
 
 
@@ -258,6 +268,14 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
 
   function postActivityData() {
+
+  let defaultDate = new Date();
+  let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+  console.log("date here--->", currentDate)
+
+  todayDate = currentDate;
+
+
 
 
   preventDefault();
@@ -270,12 +288,12 @@ function storeUserData (activityData, hydrationData, sleepData) {
   const flightStairsInput = parseInt(addFlightStairs.value);
   console.log(flightStairsInput);
 
-  let user = userRepository.users[0];
+  let user = userRepository.users[1];
 
 
   let postObject = {
      userID: user.id,
-     date: currentDate,
+     date: todayDate,
      numSteps: numStepsInput,
      minutesActive: minActiveInput,
      flightsOfStairs: flightStairsInput
@@ -283,7 +301,7 @@ function storeUserData (activityData, hydrationData, sleepData) {
   console.log('postObject', postObject)
 
   fetchCalls.postNewData('activity', postObject);
-
+  fetchData();
   }
 
 
@@ -302,15 +320,15 @@ function storeUserData (activityData, hydrationData, sleepData) {
 function activityInformation(user, userRepository) {
 
   ///////// ACTIVITIES FOR TODAY ---------------->
-  stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user, todayDate).minutesActive;
+  stepsInfoActiveMinutesToday.innerText = user.findActivityInfoToday(user).minutesActive;
 
-  stepsUserStepsToday.innerText = user.findActivityInfoToday(user, todayDate).steps;
+  stepsUserStepsToday.innerText = user.findActivityInfoToday(user).steps;
 
-  stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user, todayDate).calculateMiles(userRepository);
+  stepsInfoMilesWalkedToday.innerText = user.findActivityInfoToday(user).calculateMiles(userRepository);
 
-  stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs;
+  stairsInfoFlightsToday.innerText = user.findActivityInfoToday(user).flightsOfStairs;
 
-  stairsUserStairsToday.innerText = user.findActivityInfoToday(user, todayDate).flightsOfStairs * 12;
+  stairsUserStairsToday.innerText = user.findActivityInfoToday(user).flightsOfStairs * 12;
 
 
 

@@ -145,10 +145,9 @@ class User {
   }
 
   //This method is recyclable and help us for all the activity info for today
-  findActivityInfoToday(user, todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+  findActivityInfoToday(user) {
+    let todayDate = this.activityRecord[0].date;
+    
     return this.activityRecord.find(activity =>
       activity.userId === user.id && activity.date === todayDate);
   }
