@@ -12,6 +12,8 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 
+import dayjs from 'dayjs';
+
 // import activityData from './data/activity';
 import fetchCalls from './apiCalls';
 // console.log(fetchCalls)
@@ -157,7 +159,17 @@ function showInfo() {
 let userRepository = new UserRepository();
 
 //REFACTOR:NEW CHANGE: this date is not accurate
+
+
+let defaultDate = new Date();
+// console.log(defaultDate)
+let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+console.log("date here--->", currentDate)
+
+
 let todayDate = "2019/09/22";
+// 2019/09/22
+//2020/01/19
 let user;
   // date should be last date in list.
   // get rid of this global variable and add an argument to each method in user class that requires date
@@ -337,7 +349,7 @@ document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
 //   const formData = new FormData(e.target);
 //   const sleepItem = {
 //     userID: user.id;
-//     date: Date.now();
+//     date: currentDate;
 //     hoursSlept: formData.get('hoursSlept');
 //     sleepQuality: formData.get('sleepQuality');
 //   }
@@ -352,27 +364,36 @@ function addSleep(sleepItem) {
     body: JSON.stringify(sleepItem)
   }).then(reponse => checkForError(reponse))
   .then( {
+
+    // example.. add animal to the page...
     //create new function
     updatePageInfo();
     // add to UserClass.. with fetch is this a consistently updating dom with the server running(AJAX). Will it be automatically updated without a reload if we add to the sleep class?
 
     //check how this data will be recieved from the class/set up correctly in current object?
-    new Sleep(sleepItem)
+  
+    // new Sleep(sleepItem); and then push user by replacing user in array... ...
+    //this wont automatically update the user Repo.
+    // refetch the data.*
+  #2 option 2
+    // fetchData()
   })
   .catch(err => displayErrorMessage(err)) 
 }
+
+
 //we need to update our data model so we should also instantiate a new instance of our sleep class**
 
 //OTHER NOTES: need to disable submit button and add required to each field.
 
-function checkForError() {
-  if(!response.ok) {
-    throw new Error ('Please make sure all fields are selected.')
-  } else {
-    return response.json();
-  }
-}
-//if needed.
+// function checkForError() {
+//   if(!response.ok) {
+//     throw new Error ('Please make sure all fields are selected.')
+//   } else {
+//     return response.json();
+//   }
+// }
+// if needed.
 // fetchCalls.callFitLitData('sleep');
 
 ///PUT ALL OF THIS IN A FUNCTION TO CALL IN DISPLAY INFO AFTER API CALL MADE.
