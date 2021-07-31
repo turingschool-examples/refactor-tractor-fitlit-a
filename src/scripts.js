@@ -331,7 +331,6 @@ function userInformation(user) {
 document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
   addSleep(e);
 })
-
 function addSleep() {
   e.preventDefault();
   const formData = new FormData(e.target);
