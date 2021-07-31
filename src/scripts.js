@@ -169,6 +169,7 @@ let userRepository = new UserRepository();
 
 let todayDate = "2019/09/22";
 
+
 // default date--- last date in the array
 // on a post 
 
@@ -348,30 +349,34 @@ document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
   addSleep(e);
 })
 
-function addSleep() {
-  
+function addSleep(e) {
+  console.log("I am here")
   e.preventDefault();
-
-let defaultDate = new Date();
-let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-todayDate = currentdate;
+    console.log("I am here")
+  let defaultDate = new Date();
+  let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+  console.log(currentDate)
+  todayDate = currentDate ;
 
   const formData = new FormData(e.target);
+  console.log("formData", formData)
+  
   const sleepItem = {
-    userID: user.id;
-    date: currentDate;
-    hoursSlept: formData.get('hoursSlept');
-    sleepQuality: formData.get('sleepQuality');
+    userID: user.id,
+    date: currentDate,
+    hoursSlept: formData.get('hoursSlept'),
+    sleepQuality: formData.get('sleepQuality')
   }
+
   addSleepItem(sleepItem);
   e.target.reset();
 }
 
 
-function addSleep(sleepItem) {
+function addSleepItem(sleepItem) {
   fetch('http://localhost:3001/api/v1/sleep', {
     method: 'POST',
-    headers: { 'Content-type': application/json },
+    headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(sleepItem)
   })
   .then(response => {
@@ -393,7 +398,10 @@ function addSleep(sleepItem) {
 
 
   )
-  .catch(err => displayErrorMessage(err)) 
+  .catch(err => {
+    console.log(err)
+    displayErrorMessage(err)
+  }) 
 }
 
 
