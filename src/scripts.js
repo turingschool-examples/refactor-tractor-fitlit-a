@@ -14,7 +14,12 @@ import Sleep from './Sleep';
 
 // import activityData from './data/activity';
 import fetchCalls from './apiCalls';
-// console.log(fetchCalls)
+
+
+
+
+
+
 
 ///---GLOBAL VARIABLES FOR DOM ELEMENTS ---------------------------
 let dailyOz = document.querySelectorAll('.daily-oz');
@@ -76,6 +81,12 @@ let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
+
+
+
+function preventDefault() {
+  event.preventDefault()
+}
 
 
 function flipCard(cardToHide, cardToShow) {
@@ -224,6 +235,21 @@ function storeUserData (activityData, hydrationData, sleepData) {
     //NEED to FIX hydration function here// this is why it currently does not show up on the page.. there is no function that calls it.
     hydrationInformation(user, userRepository);
   }
+
+
+
+  /////////// CREATE A NEW POST REQUEST ------------------------->
+
+
+
+
+
+
+  //------------------------------------------------------------->
+
+
+
+
 
 
 
