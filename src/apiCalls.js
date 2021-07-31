@@ -7,7 +7,7 @@ const fetchCalls = {
       .catch(err => console.error(err))
   },
 
-  postNewData(body) {
+  postNewData(endPoint, body) {
     return fetch(`http://localhost:3001/api/v1/${endPoint}`, {
       method: 'POST',
       headers: {

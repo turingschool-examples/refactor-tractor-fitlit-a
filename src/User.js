@@ -73,7 +73,7 @@ class User {
     });
     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-    console.log("qualityaver", this.sleepHoursRecord)
+    // console.log("qualityaver", this.sleepHoursRecord)
   }
 
   calculateAverageHoursThisWeek(todayDate) {

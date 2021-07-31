@@ -12,12 +12,19 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 
+
+
 // import activityData from './data/activity';
 import fetchCalls from './apiCalls';
 
+let defaultDate = new Date();
+// console.log(defaultDate)
+let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+console.log("date here--->", dateDayJs)
 
 
-
+// let user ;
+// let todayDate = "2019/09/22";
 
 
 
@@ -238,10 +245,35 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
 
 
-  /////////// CREATE A NEW POST REQUEST ------------------------->
+  /////////// CREATE A NEW ACTIVITY POST REQUEST ------------------>
 
 
+  function postActivityData() {
+    // console.log(currentUser.id);
+  // console.log(dateJs);
+  // console.log(typeof parseInt(event.target.querySelector('.room-num').innerHTML.split(' ')[2]));
+  preventDefault();
+  let makeBookingBtn = document.getElementById('makeBookingBtn');
+  makeBookingBtn.innerText = "Successful Book"
+  const test1 = event.target.querySelector('.room-num');
+  const test2 = test1.innerHTML.split(' ')[2]
+  const test3 = parseInt(test2);
+  // console.log(test3);
 
+  let user = userRepository.users[0];
+
+  let postObject = {
+     userID: user.id,
+     date: currentDate,
+     numSteps: ,
+     minutesActive: ,
+     flightsOfStairs:
+    };
+  console.log('postObject', postObject)
+
+  fetchCalls.postNewData('activity', postObject);
+
+  }
 
 
 
