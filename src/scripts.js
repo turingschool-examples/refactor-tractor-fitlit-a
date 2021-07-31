@@ -331,23 +331,38 @@ function userInformation(user) {
 document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
   addSleep(e);
 })
-function addSleep() {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const sleepItem = {
-    userID: user.id;
-    date: Date.now();
-    hoursSlept: formData.get('hoursSlept');
-    sleepQuality: formData.get('sleepQuality');
-  }
-  addSleepItem(sleepItem);
-  e.target.reset();
-}
+
+// function addSleep() {
+//   e.preventDefault();
+//   const formData = new FormData(e.target);
+//   const sleepItem = {
+//     userID: user.id;
+//     date: Date.now();
+//     hoursSlept: formData.get('hoursSlept');
+//     sleepQuality: formData.get('sleepQuality');
+//   }
+//   addSleepItem(sleepItem);
+//   e.target.reset();
+// }
 
 function addSleep(sleepItem) {
-
+  fetch(http://localhost:3001/api/v1/sleep), {
+    method: 'POST',
+    headers: {'Content-type': application/json},
+    body: JSON.stringify(sleepItem)
+  }).then(reponse => checkForError(reponse))
+  .then()
+  .catch() 
 }
 
+function checkForError() {
+  if(!response.ok) {
+    throw new Error ('Please make sure all fields are selected.')
+  } else {
+    return response.json();
+  }
+}
+//if needed.
 // fetchCalls.callFitLitData('sleep');
 
 ///PUT ALL OF THIS IN A FUNCTION TO CALL IN DISPLAY INFO AFTER API CALL MADE.
