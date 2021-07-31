@@ -161,13 +161,17 @@ let userRepository = new UserRepository();
 //REFACTOR:NEW CHANGE: this date is not accurate
 
 
-let defaultDate = new Date();
-// console.log(defaultDate)
-let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-console.log("date here--->", currentDate)
 
+// let defaultDate = new Date();
+// // console.log(defaultDate)
+// let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+// console.log("date here--->", currentDate)
 
 let todayDate = "2019/09/22";
+
+// default date--- last date in the array
+// on a post 
+
 // 2019/09/22
 //2020/01/19
 let user;
@@ -245,7 +249,7 @@ function storeUserData (activityData, hydrationData, sleepData) {
     sleepInformation(user, userRepository);
     userInformation(user);
     //NEED to FIX hydration function here// this is why it currently does not show up on the page.. there is no function that calls it.
-    hydrationInformation(user, userRepository);
+    // hydrationInformation(user, userRepository);
   }
 
 
@@ -344,99 +348,115 @@ document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
   addSleep(e);
 })
 
-// function addSleep() {
-//   e.preventDefault();
-//   const formData = new FormData(e.target);
-//   const sleepItem = {
-//     userID: user.id;
-//     date: currentDate;
-//     hoursSlept: formData.get('hoursSlept');
-//     sleepQuality: formData.get('sleepQuality');
-//   }
-//   addSleepItem(sleepItem);
-//   e.target.reset();
-// }
+function addSleep() {
+  
+  e.preventDefault();
+
+let defaultDate = new Date();
+let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
+todayDate = currentdate;
+
+  const formData = new FormData(e.target);
+  const sleepItem = {
+    userID: user.id;
+    date: currentDate;
+    hoursSlept: formData.get('hoursSlept');
+    sleepQuality: formData.get('sleepQuality');
+  }
+  addSleepItem(sleepItem);
+  e.target.reset();
+}
+
 
 function addSleep(sleepItem) {
-  fetch(http://localhost:3001/api/v1/sleep), {
+  fetch('http://localhost:3001/api/v1/sleep', {
     method: 'POST',
-    headers: {'Content-type': application/json},
+    headers: { 'Content-type': application/json },
     body: JSON.stringify(sleepItem)
-  }).then(reponse => checkForError(reponse))
-  .then( {
+  })
+  .then(response => {
+    console.log("response", response)
+    checkForError(response)
+  })
+  .then(
 
     // example.. add animal to the page...
     //create new function
-    updatePageInfo();
+  
     // add to UserClass.. with fetch is this a consistently updating dom with the server running(AJAX). Will it be automatically updated without a reload if we add to the sleep class?
 
     //check how this data will be recieved from the class/set up correctly in current object?
-  
-    // new Sleep(sleepItem); and then push user by replacing user in array... ...
-    //this wont automatically update the user Repo.
-    // refetch the data.*
-  #2 option 2
-    // fetchData()
-  })
+
+
+    fetchData()
+    //better name for this fetchData function is fetch and post
+
+
+  )
   .catch(err => displayErrorMessage(err)) 
 }
 
 
-//we need to update our data model so we should also instantiate a new instance of our sleep class**
-
 //OTHER NOTES: need to disable submit button and add required to each field.
 
-// function checkForError() {
-//   if(!response.ok) {
-//     throw new Error ('Please make sure all fields are selected.')
-//   } else {
-//     return response.json();
-//   }
+function checkForError(err) {
+  if(!response.ok) {
+    throw new Error ('Please make sure all fields are selected.')
+  } else {
+    return response.json();
+  }
+}
+
+// function displayErrorMessage(err) {
+//   const errorField = document.querySelector('.js-error');
+
 // }
-// if needed.
-// fetchCalls.callFitLitData('sleep');
+
+
+
+
 
 ///PUT ALL OF THIS IN A FUNCTION TO CALL IN DISPLAY INFO AFTER API CALL MADE.
 ///TO DO: ... Move INTO USER CLASSS AND WRAP HYDRATION INFORMATION FUNCTION AROUND IT TO MATCH OTHERS. ----------------------------------------------------
 
-function hydrationInformation(user, userRepository) {
-for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-}
+// function hydrationInformation(user, userRepository) {
+// for (var i = 0; i < dailyOz.length; i++) {
+//   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+// }
 
-hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
-// Old Code
-// hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+// hydrationUserOuncesToday.innerText = user.getOuncesByDate(todayDate);
+// // Old Code
+// // hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+// //   return hydration.userID === user.id && hydration.date === todayDate;
+// // }).numOunces;
+
+// hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+
+// //user class
+// hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 //   return hydration.userID === user.id && hydration.date === todayDate;
-// }).numOunces;
+// }).numOunces / 8;
 
-hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+// //--------------------------------------------------------------------------
+// ///ERROR: scripts.js:179 ReferenceError: Cannot access 'sortedHydrationDataByDate' before initialization
+//   let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+//     if (Object.keys(a)[0] > Object.keys(b)[0]) {
+//       return -1;
+//     }
+//     if (Object.keys(a)[0] < Object.keys(b)[0]) {
+//       return 1;
+//     }
+//     return 0;
+//   });
 
-//user class
-hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces / 8;
-
-//--------------------------------------------------------------------------
-///ERROR: scripts.js:179 ReferenceError: Cannot access 'sortedHydrationDataByDate' before initialization
-  let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-    if (Object.keys(a)[0] > Object.keys(b)[0]) {
-      return -1;
-    }
-    if (Object.keys(a)[0] < Object.keys(b)[0]) {
-      return 1;
-    }
-    return 0;
-  });
-
-}
+// }
 
 
 //DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
 ///THESE FOR NOW NEED TO STAY HERE  -------------------
 
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+// stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 
 
@@ -478,8 +498,8 @@ sleepUserHoursToday.innerText = user.getHoursSleptByDate(todayDate);
 //DOM ELEMENTS THAT ARE UPDATED PART 2 THAT NEED USER instantiated first!!***...
 ///THESE FOR NOW NEED TO STAY HERE  -------------------
 
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+// stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 
 //////////////////////// -  ACTIVITY -  EVENT LISTENERS ////////////////////
