@@ -161,7 +161,7 @@ let todayDate = "2019/09/22";
    // // if(!date){
     //   this.sleepQualityAverage[0].date;
     // }
-//see calculateAverageHoursThisWeek(todayDate) as an example. 
+//see calculateAverageHoursThisWeek(todayDate) as an example.
 
 
 
@@ -197,7 +197,7 @@ fetchData();
 function storeUserData (activityData, hydrationData, sleepData) {
     // -------------------------------------->
     // After that we had instantiated every element from the userData in a User class, we would update the properties relted of each instated user (.activityRecord, .accomplishedDays, .trendingStepDays ...) - Using this iteration will allow us to create an instances of every element from the activityData file and push it in the correct instantiated user ! ---->
-    
+
     activityData.activityData.forEach(activity => {
      new Activity(activity, userRepository);
     });
@@ -217,7 +217,7 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
   function updatePageInfo() {
     let user = userRepository.users[0];
-    
+
     activityInformation(user, userRepository);
     sleepInformation(user, userRepository);
     userInformation(user);
@@ -322,6 +322,15 @@ function userInformation(user) {
 ///TO DO: ... Move INTO USER CLASSS AND WRAP HYDRATION INFORMATION FUNCTION AROUND IT TO MATCH OTHERS. ----------------------------------------------------
 
 function hydrationInformation(user, userRepository) {
+  let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+    if (Object.keys(a)[0] > Object.keys(b)[0]) {
+      return -1;
+    }
+    if (Object.keys(a)[0] < Object.keys(b)[0]) {
+      return 1;
+    }
+    return 0;
+  });
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
@@ -341,15 +350,6 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
 
 //--------------------------------------------------------------------------
 ///ERROR: scripts.js:179 ReferenceError: Cannot access 'sortedHydrationDataByDate' before initialization
-  let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-    if (Object.keys(a)[0] > Object.keys(b)[0]) {
-      return -1;
-    }
-    if (Object.keys(a)[0] < Object.keys(b)[0]) {
-      return 1;
-    }
-    return 0;
-  });
 
 }
 

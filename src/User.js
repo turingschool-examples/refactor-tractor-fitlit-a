@@ -52,6 +52,7 @@ class User {
   }
 
   addDailyOunces(date) {
+    console.log(this.ouncesRecord);
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
       if (amount) {
@@ -73,7 +74,7 @@ class User {
     });
     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-    console.log("qualityaver", this.sleepHoursRecord)
+    // console.log("qualityaver", this.sleepHoursRecord)
   }
 
   calculateAverageHoursThisWeek(todayDate) {
@@ -120,7 +121,7 @@ class User {
     //   this.sleepQualityAverage[0].date;
     // }
     let valueNeeded = 0;
-    console.log("hours", this.sleepHoursRecord)
+    // console.log("hours", this.sleepHoursRecord)
     this.sleepHoursRecord.forEach(item => {
       if (item.date === date)  {
         valueNeeded = item.hours;
@@ -276,7 +277,7 @@ class User {
   // Extra Method: (extension) --------->
   //THIS FUNCTION IS NEVER USED
   findClimbingRecord() {
-    console.log("this.activityRecord", this.activityRecord)
+    // console.log("this.activityRecord", this.activityRecord)
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
     })[0].flightsOfStairs;
