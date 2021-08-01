@@ -73,13 +73,12 @@ class User {
     });
     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-    // console.log("qualityaver", this.sleepHoursRecord)
   }
 
   calculateAverageHoursThisWeek(todayDate) {
-    // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+     if(!todayDate){
+      todayDate = this.sleepQualityRecord[0].date;
+    }
   return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
     let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
     if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
@@ -90,9 +89,9 @@ class User {
   }
 
   calculateAverageQualityThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+     if(!todayDate){
+      todayDate = this.sleepQualityRecord[0].date;
+    }
     return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
       let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
       if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
@@ -103,9 +102,9 @@ class User {
   }
 
   getSleepQualityByDate(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+      if(!date){
+      date = this.sleepQualityRecord[0].date;
+    }
     let valueNeeded = 0;
     this.sleepQualityRecord.forEach(item => {
       if (item.date === date)  {
@@ -116,11 +115,10 @@ class User {
   }
 
   getHoursSleptByDate(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
-    // }
+      if(!date){
+      date = this.sleepQualityRecord[0].date;
+    }
     let valueNeeded = 0;
-    // console.log("hours", this.sleepHoursRecord)
     this.sleepHoursRecord.forEach(item => {
       if (item.date === date)  {
         valueNeeded = item.hours;
@@ -138,7 +136,6 @@ class User {
   // update activity data to corresponding user instances ------>
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
-
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
@@ -169,8 +166,8 @@ class User {
 
   // calculate daily calores -------> EXTRA INFO <----------------
   calculateDailyCalories(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //    if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date
@@ -179,7 +176,7 @@ class User {
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
-  
+
   // Where are we using this method ? ------------->
   findTrendingStepDays() {
     let positiveDays = [];
@@ -255,7 +252,6 @@ class User {
 
   // Extra Method: (extension) --------->
   findClimbingRecord() {
-    console.log("this.activityRecord", this.activityRecord)
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
     })[0].flightsOfStairs;
