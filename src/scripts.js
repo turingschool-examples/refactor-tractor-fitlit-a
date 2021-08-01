@@ -333,24 +333,27 @@ function activityInformation(user, userRepository) {
 
 
   ///////// ACTIVITIES FOR WEEK -------------------->
-  stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+  stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateActivityAverageThisWeek('minutesActive')
+  // console.log(user.calculateActivityAverageThisWeek('minutesActive'))
 
-  stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
 
-  stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+  stepsCalendarTotalStepsWeekly.innerText = user.calculateActivityAverageThisWeek('steps');
 
-  stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+  stairsCalendarFlightsAverageWeekly.innerText = user.calculateActivityAverageThisWeek('flightsOfStairs');
+
+  stairsCalendarStairsAverageWeekly.innerText =
+  (user.calculateActivityAverageThisWeek('flightsOfStairs') * 12).toFixed(0);
 
 
 
   ///////// ACTIVITIES AVERAGES -------------->
-  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps();
 
   // Today's Minutes Active from Friends:
-  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive();
 
   // Today's Average Stairs Fligthed  from Friends:
-  stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs() / 12).toFixed(1);
 
   // Steps Goal from all friends:
   stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
