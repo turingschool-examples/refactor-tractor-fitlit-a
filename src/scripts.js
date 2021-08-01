@@ -417,7 +417,7 @@ function checkForError(response) {
 
 function displayErrorMessage(err) {
   const errorField = document.querySelector('.js-error');
-  errorField.innerHTML = `${err} Server error! Check back later.`
+  errorField.innerHTML = `${err} -Please check back later.`
 
 }
 
