@@ -136,7 +136,6 @@ class User {
   // update activity data to corresponding user instances ------>
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
-    // console.log("activity record in user class:", this.activityRecord)
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
@@ -144,8 +143,8 @@ class User {
 
   //This method is recyclable and help us for all the activity info for today
   findActivityInfoToday(user, todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    // if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     return this.activityRecord.find(activity =>
       activity.userId === user.id && activity.date === todayDate);
@@ -153,8 +152,8 @@ class User {
 
   // calculate total "steps" this WEEK ----------> (I believe we are not using this method)
   calculateTotalStepsThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //    if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -166,8 +165,8 @@ class User {
   }
   // calculate average "minutes" this WEEK ---------->
   calculateAverageMinutesActiveThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //    if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -179,8 +178,8 @@ class User {
   }
   // calculate average "steps" this WEEK ---------->
   calculateAverageStepsThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //       if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -192,8 +191,8 @@ class User {
   }
   // calculate average "flights" this WEEK ---------->
   calculateAverageFlightsThisWeek(todayDate) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //       if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     return (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -205,8 +204,8 @@ class User {
   }
   // calculate daily calores -------> EXTRA INFO <----------------
   calculateDailyCalories(date) {
-      // if(!date){
-    //   this.sleepQualityAverage[0].date;
+    //    if(!todayDate){
+    //   todayDate = this.activityRecord[0].date);
     // }
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date
