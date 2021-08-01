@@ -180,6 +180,30 @@
       </section>
       <section class='card-container' id='sleep-card-container'>
         <section class='main-card' id='sleep-main-card'>
+          <!-- ///ADDITIONAL HTML ------ -->
+          <section class='form-container'>
+            <form id="js-add-sleep">
+              <label for="hoursSlept">Number of Hours Slept</label>
+              <select name="hoursSlept" id="hoursSlept" required>
+                <option value="">1 - 2</option>
+                <option value="">3 - 4</option>
+                <option value="">5 - 6</option>
+                <option value="">6 - 8</option>
+                <option value="">8 + </option>
+              </select>
+              <!-- <input placeholder="hours slept last night" name="hoursSlept" required /> -->
+              <label for="sleepQuality">Number of Nightly Interruptions</label>
+              <select name="sleepQuality" id="sleepQuality" required>
+                <option value="">1 or less</option>
+                <option value="">3 - 4</option>
+                <option value=""> 5 +</option>
+              </select>
+              <!-- <input placeholder="hours slept without interruptions" name="hoursSlept" required />  -->
+              <input type="submit" value="Submit">
+            </form>
+            <p class="js-error"></p>
+          </section>
+          <!-- ///---------------------- -->
           <div class='main-card-top-row'>
             <button type='button' name='button' class='info-button sleep-info-button'></button>
             <h3>YOU SLEPT</h3>
