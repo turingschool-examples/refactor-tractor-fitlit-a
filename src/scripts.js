@@ -350,17 +350,12 @@ document.getElementById('js-add-sleep').addEventListener('submit', (e) => {
 })
 
 function addSleep(e) {
-  console.log("I am here")
   e.preventDefault();
-    console.log("I am here")
   let defaultDate = new Date();
   let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-  console.log(currentDate)
   todayDate = currentDate ;
-
   const formData = new FormData(e.target);
-  console.log("formData", formData)
-  
+
   const sleepItem = {
     userID: user.id,
     date: currentDate,
@@ -372,7 +367,6 @@ function addSleep(e) {
   e.target.reset();
 }
 
-
 function addSleepItem(sleepItem) {
   fetch('http://localhost:3001/api/v1/sleep', {
     method: 'POST',
@@ -380,23 +374,10 @@ function addSleepItem(sleepItem) {
     body: JSON.stringify(sleepItem)
   })
   .then(response => {
-    console.log("response", response)
     checkForError(response)
   })
   .then(
-
-    // example.. add animal to the page...
-    //create new function
-  
-    // add to UserClass.. with fetch is this a consistently updating dom with the server running(AJAX). Will it be automatically updated without a reload if we add to the sleep class?
-
-    //check how this data will be recieved from the class/set up correctly in current object?
-
-
     fetchData()
-    //better name for this fetchData function is fetch and post
-
-
   )
   .catch(err => {
     console.log(err)
@@ -404,11 +385,8 @@ function addSleepItem(sleepItem) {
   }) 
 }
 
-
-//OTHER NOTES: need to disable submit button and add required to each field.
-
 function checkForError(response) {
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error ('Please make sure all fields are selected.')
   } else {
     return response.json();
@@ -418,7 +396,6 @@ function checkForError(response) {
 function displayErrorMessage(err) {
   const errorField = document.querySelector('.js-error');
   errorField.innerHTML = `${err} -Please check back later.`
-
 }
 
 
