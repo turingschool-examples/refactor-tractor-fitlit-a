@@ -91,9 +91,7 @@ class UserRepository {
   //   return Math.round(sumOfStairs / allUsersStairsCount.length);
   // }
   calculateAverageStepGoal() {
-    let goals = this.users.map(function(user) {
-      return user.dailyStepGoal;
-    });
+    let goals = this.users.map((user) => user.dailyStepGoal);
     let total = goals.reduce(function(sum, goal) {
       sum += goal;
       return sum;

@@ -264,32 +264,20 @@ function storeUserData (activityData, hydrationData, sleepData) {
 
   /////////// CREATE A NEW ACTIVITY POST REQUEST ------------------>
 
-
-
-
   function postActivityData() {
+    // preventDefault(); ---> Is not longer nesseasry because I wanit to update !
+    // todayDate = currentDate;
 
   let defaultDate = new Date();
   let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
-  console.log("date here--->", currentDate)
 
-  todayDate = currentDate;
-
-
-
-
-  preventDefault();
   const numStepsInput = parseInt(addNumSteps.value);
-  console.log(numStepsInput)
 
   const minActiveInput = parseInt(addMinActv.value);
-  console.log(minActiveInput)
 
   const flightStairsInput = parseInt(addFlightStairs.value);
-  console.log(flightStairsInput);
 
   let user = userRepository.users[1];
-
 
   let postObject = {
      userID: user.id,
@@ -304,15 +292,7 @@ function storeUserData (activityData, hydrationData, sleepData) {
   fetchData();
   }
 
-
-
   //------------------------------------------------------------->
-
-
-
-
-
-
 
 
 
@@ -368,7 +348,6 @@ function activityInformation(user, userRepository) {
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
     `;
   });
-
 
   friendsStepsParagraphs.forEach(paragraph => {
     if (friendsStepsParagraphs[0] === paragraph) {

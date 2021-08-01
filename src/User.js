@@ -179,6 +179,7 @@ class User {
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
+  
   // Where are we using this method ? ------------->
   findTrendingStepDays() {
     let positiveDays = [];
@@ -191,6 +192,7 @@ class User {
       }
     }
   }
+
   // Where are we using this method ? ------------->
   findTrendingStairsDays() {
     let positiveDays = [];
@@ -203,12 +205,14 @@ class User {
       }
     }
   }
+
   // Extra Method: (extension) --------->
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
   }
+
   calculateTotalStepsThisWeek(todayDate) {
     // let todayDate = this.activityRecord[0].date;
     // console.log(this.totalStepsThisWeek)
@@ -221,6 +225,7 @@ class User {
       return sum;
     }, 0));
   }
+
   // Extra Method: (extension) --------->
   findFriendsTotalStepsForWeek(users, date) {
       // if(!date){
@@ -247,8 +252,8 @@ class User {
     });
     this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   }
+
   // Extra Method: (extension) --------->
-  //THIS FUNCTION IS NEVER USED
   findClimbingRecord() {
     console.log("this.activityRecord", this.activityRecord)
     return this.activityRecord.sort((a, b) => {
