@@ -415,10 +415,11 @@ function checkForError(err) {
   }
 }
 
-// function displayErrorMessage(err) {
-//   const errorField = document.querySelector('.js-error');
+function displayErrorMessage(err) {
+  const errorField = document.querySelector('.js-error');
+  errorField.innerHTML = "Server error! Check back later."
 
-// }
+}
 
 
 
