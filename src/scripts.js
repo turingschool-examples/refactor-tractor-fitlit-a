@@ -14,9 +14,6 @@ import Sleep from './Sleep';
 import dayjs from 'dayjs';
 
 
-
-import dayjs from 'dayjs';
-
 // import activityData from './data/activity';
 import fetchCalls from './apiCalls';
 
