@@ -347,13 +347,15 @@ function activityInformation(user, userRepository) {
 
 
   ///////// ACTIVITIES AVERAGES -------------->
-  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps();
+  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverages(user, 'steps');
 
-  // Today's Minutes Active from Friends:
-  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive();
+  stepsFriendActiveMinutesAverageToday.innerText =
+  userRepository.calculateAverages(user, 'minutesActive');
+ // userRepository.calculateAverageMinutesActive();
 
-  // Today's Average Stairs Fligthed  from Friends:
-  stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs() / 12).toFixed(1);
+  stairsFriendFlightsAverageToday.innerText =
+  (userRepository.calculateAverages(user, 'flightsOfStairs') / 12).toFixed(1);
+  // (userRepository.calculateAverageStairs() / 12).toFixed(1);
 
   // Steps Goal from all friends:
   stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
