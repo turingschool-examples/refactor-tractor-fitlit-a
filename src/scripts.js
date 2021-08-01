@@ -407,7 +407,7 @@ function addSleepItem(sleepItem) {
 
 //OTHER NOTES: need to disable submit button and add required to each field.
 
-function checkForError(err) {
+function checkForError(response) {
   if(!response.ok) {
     throw new Error ('Please make sure all fields are selected.')
   } else {
@@ -417,7 +417,7 @@ function checkForError(err) {
 
 function displayErrorMessage(err) {
   const errorField = document.querySelector('.js-error');
-  errorField.innerHTML = "Server error! Check back later."
+  errorField.innerHTML = `${err} Server error! Check back later.`
 
 }
 
