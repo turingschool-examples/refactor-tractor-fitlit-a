@@ -23,6 +23,16 @@
     <main>
       <section class='card-container' id='steps-card-container'>
         <section class='main-card' id='steps-main-card'>
+          <form>
+            <label for="num-steps">
+            <input type="number" class="add-num-steps" name="num-steps" placeholder="Number of Steps" required>
+            <label for="min-actv">
+            <input type="number" class="add-min-actv" name="min-actv" placeholder="Minutes Active" required>
+            <label for="flight-stairs">
+            <input type="number" class="add-flight-stairs" name="flight-stairs" placeholder="Flights of Stairs" required>
+            <button type="submit" value="submit-atcv-data" id="submitAtcvData">Submit Activity</button>
+          </form>
+          <p class="post-error-activity"></p>
           <div class='main-card-top-row'>
             <button type='button' name='button' class='info-button steps-info-button'></button>
             <h3>YOU HAVE WALKED</h3>
@@ -89,6 +99,8 @@
           <div class='main-card-bottom-row'>
             <h3>OZ OF WATER TODAY</h3>
             <button type='button' name='button' class='calendar-button hydration-calendar-button'></button>
+            <input type="number" class="add-num-ounces" name="ounces-water" placeholder="# of Oz" required>
+            <button type="submit" class="num-ounces-input" value="submit-hydro-data" id="submitHydrationData">Submit Hydration</button>
           </div>
         </section>
         <section class='info-card hide' id='hydration-info-card'>
@@ -180,6 +192,26 @@
       </section>
       <section class='card-container' id='sleep-card-container'>
         <section class='main-card' id='sleep-main-card'>
+          <section class='form-container'>
+            <form id="js-add-sleep">
+              <label for="hoursSlept">Number of Hours Slept</label>
+              <select name="hoursSlept" id="hoursSlept" required>
+                <option value="">1 - 2</option>
+                <option value="">3 - 4</option>
+                <option value="">5 - 6</option>
+                <option value="">6 - 8</option>
+                <option value="">8 + </option>
+              </select>
+              <label for="sleepQuality">Number of Nightly Interruptions</label>
+              <select name="sleepQuality" id="sleepQuality" required>
+                <option value="">1 or less</option>
+                <option value="">3 - 4</option>
+                <option value=""> 5 +</option>
+              </select>
+              <input type="submit" value="Submit">
+            </form>
+            <p class="js-error"></p>
+          </section>
           <div class='main-card-top-row'>
             <button type='button' name='button' class='info-button sleep-info-button'></button>
             <h3>YOU SLEPT</h3>
@@ -229,7 +261,7 @@
           </div>
         </section>
       </section>
-    </main>  
+    </main>
     <script src="bundle.js"></script>
   </body>
 </html>
