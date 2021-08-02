@@ -86,6 +86,7 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+let hydrationDataEntry = document.querySelectorAll('.num-ounces-input');
 
 // queries for DOM post request !
 let addNumSteps = document.querySelector('.add-num-steps');
@@ -282,8 +283,6 @@ function storeUserData (activityData, hydrationData, sleepData) {
   /////////// CREATE A NEW ACTIVITY POST REQUEST ------------------>
 
   function postActivityData() {
-    // preventDefault(); ---> Is not longer nesseasry because I wanit to update !
-    // todayDate = currentDate;
 
   let defaultDate = new Date();
   let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
